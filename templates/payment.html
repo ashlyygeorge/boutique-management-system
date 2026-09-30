@@ -1,0 +1,36 @@
+{% load static %}
+{% include 'header.html' %}
+
+<div class="container mt-5 mb-5 text-center">
+
+    <h3>Complete Your Payment</h3>
+
+    <p class="mt-3">
+        Order Amount:
+        <strong>₹{{ total|floatformat:2 }}</strong>
+    </p>
+
+    <form action="{% url 'payment_success' %}" method="POST">
+
+        {% csrf_token %}
+
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="{{ key }}"
+            data-amount="{{ amount }}"
+            data-currency="INR"
+            data-order_id="{{ order_id }}"
+            data-buttontext="Pay with Razorpay"
+            data-name="ELORA"
+            data-description="Boutique Order Payment"
+            data-prefill.name="{{ customer_name }}"
+            data-prefill.email="{{ email }}"
+            data-prefill.contact="{{ phone }}"
+            data-theme.color="#1d3557">
+        </script>
+
+    </form>
+
+</div>
+
+{% include 'footer.html' %}

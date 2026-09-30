@@ -1,0 +1,474 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+    /* =========================
+       ADMIN DASHBOARD
+       Colors kept unchanged
+    ========================= */
+
+    .admin-dashboard {
+        padding-top: 50px;
+        padding-bottom: 70px;
+    }
+
+    /* Main Heading */
+    .dashboard-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 42px;
+        font-weight: 600;
+        color: #24201d;
+        margin-bottom: 8px;
+    }
+
+    .dashboard-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        color: #8a817c;
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    /* =========================
+       STAT CARDS
+    ========================= */
+
+    .stat-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 28px 22px;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: #24201d;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(36, 32, 29, 0.08);
+    }
+
+    .stat-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .stat-card h5 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: #8a817c;
+        margin-bottom: 15px;
+    }
+
+    .stat-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 36px;
+        font-weight: 600;
+        color: #24201d;
+        margin-bottom: 5px;
+    }
+
+    /* Keep danger color unchanged */
+    .stat-number.text-danger {
+        color: #dc3545 !important;
+    }
+
+    /* Buttons */
+    .admin-btn {
+        border-radius: 0;
+        padding: 10px 18px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .admin-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* =========================
+       QUICK ACTION CARDS
+    ========================= */
+
+    .quick-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 25px;
+        height: 100%;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .quick-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(36, 32, 29, 0.08);
+    }
+
+    .quick-card h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        color: #24201d;
+        margin-bottom: 8px;
+    }
+
+    .quick-card p {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+        color: #8a817c;
+        margin-bottom: 18px;
+    }
+
+    /* =========================
+       RECENT ORDERS
+    ========================= */
+
+    .recent-orders-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 30px;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        color: #24201d;
+        margin-bottom: 5px;
+    }
+
+    .section-subtitle {
+        font-family: 'Montserrat', sans-serif;
+        color: #8a817c;
+        font-size: 12px;
+        margin-bottom: 25px;
+    }
+
+    /* Table */
+    .orders-table {
+        margin-bottom: 0;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .orders-table thead th {
+        background: #f8f3ee;
+        color: #24201d;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        padding: 14px 15px;
+        border-color: #e2d8d0;
+        white-space: nowrap;
+    }
+
+    .orders-table tbody td {
+        background: #fffdfb;
+        color: #24201d;
+        font-size: 13px;
+        padding: 15px;
+        border-color: #e2d8d0;
+        vertical-align: middle;
+    }
+
+    .orders-table tbody tr {
+        transition: all 0.2s ease;
+    }
+
+    .orders-table tbody tr:hover td {
+        background: #f8f3ee;
+    }
+
+    /* Status */
+    .order-status {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        border: 1px solid #e2d8d0;
+        background: #f8f3ee;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 768px) {
+
+        .admin-dashboard {
+            padding-top: 35px;
+        }
+
+        .dashboard-title {
+            font-size: 34px;
+        }
+
+        .stat-card {
+            padding: 24px 18px;
+        }
+
+        .recent-orders-card {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+        }
+    }
+</style>
+
+
+<div class="container admin-dashboard">
+
+    <!-- Dashboard Heading -->
+    <div class="text-center">
+        <h2 class="dashboard-title">Admin Dashboard</h2>
+
+        <p class="dashboard-subtitle">
+            Manage your store, customers, products and orders
+        </p>
+    </div>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================= -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Products -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+
+                <h5>Total Products</h5>
+
+                <div class="stat-number">
+                    {{ total_products }}
+                </div>
+
+                <a href="{% url 'product_list' %}"
+                   class="btn btn-dark admin-btn mt-3">
+                    Manage Products
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- Users -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+
+                <h5>Total Users</h5>
+
+                <div class="stat-number">
+                    {{ total_users }}
+                </div>
+
+                <a href="{% url 'userview' %}"
+                   class="btn btn-dark admin-btn mt-3">
+                    Manage Users
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- Orders -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+
+                <h5>Total Orders</h5>
+
+                <div class="stat-number">
+                    {{ total_orders }}
+                </div>
+
+                <a href="{% url 'admin_orders' %}"
+                   class="btn btn-dark admin-btn mt-3">
+                    Manage Orders
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- Sales -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+
+                <h5>Total Sales</h5>
+
+                <div class="stat-number">
+                    ₹{{ total_sales }}
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Out of Stock -->
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card">
+
+                <h5>Out of Stock</h5>
+
+                <div class="stat-number text-danger">
+                    {{ out_of_stock }}
+                </div>
+
+                <a href="{% url 'product_list' %}"
+                   class="btn btn-danger admin-btn mt-3">
+                    View Products
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================= -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Orders -->
+        <div class="col-lg-6">
+            <div class="quick-card">
+
+                <h4>Orders</h4>
+
+                <p>
+                    View and manage customer orders
+                </p>
+
+                <a href="{% url 'admin_orders' %}"
+                   class="btn btn-dark admin-btn">
+                    Manage Orders
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- Customers -->
+        <div class="col-lg-6">
+            <div class="quick-card">
+
+                <h4>Customers</h4>
+
+                <p>
+                    View registered customers
+                </p>
+
+                <a href="{% url 'userview' %}"
+                   class="btn btn-dark admin-btn">
+                    Manage Customers
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         RECENT ORDERS
+    ========================= -->
+
+    <div class="recent-orders-card">
+
+        <h4 class="section-title">
+            Recent Orders
+        </h4>
+
+        <p class="section-subtitle">
+            Latest customer orders from your store
+        </p>
+
+
+        {% if recent_orders %}
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered orders-table">
+
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for order in recent_orders %}
+
+                    <tr>
+
+                        <td>
+                            #{{ order.id }}
+                        </td>
+
+                        <td>
+                            {{ order.customer_name }}
+                        </td>
+
+                        <td>
+                            ₹{{ order.total_amount }}
+                        </td>
+
+                        <td>
+                            <span class="order-status">
+                                {{ order.order_status }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ order.order_date|date:"d-m-Y" }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p class="section-subtitle mb-0">
+            No orders yet.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% include 'footer.html' %}

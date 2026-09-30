@@ -1,0 +1,594 @@
+{% load static %}
+
+{% include 'header.html' %}
+
+<div class="container mt-5 mb-5">
+
+    <!-- Breadcrumb / Back -->
+    <!-- <div class="mb-4">
+        <a href="{% url 'admin_dashboard' %}" class="text-decoration-none back-link small">
+            <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+        </a>
+    </div> -->
+
+    <!-- ===================================================== -->
+    <!-- MESSAGES -->
+    <!-- ===================================================== -->
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show message-box" role="alert">
+            <i class="bi bi-info-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- ===================================================== -->
+    <!-- PAGE TITLE -->
+    <!-- ===================================================== -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+
+        <div>
+            <h2 class="customers-heading mb-1">
+                <i class="bi bi-people me-2"></i>All Customers
+            </h2>
+
+            <p class="customers-subtitle small mb-0">
+                Manage your boutique customers
+            </p>
+        </div>
+
+        <span class="customer-count">
+            <i class="bi bi-person-lines-fill me-1"></i>
+            {{ result|length }} customer{{ result|length|pluralize }}
+        </span>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- CUSTOMERS TABLE -->
+    <!-- ===================================================== -->
+    <div class="card border-0 customers-card">
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0 customers-table">
+
+                    <thead>
+                        <tr>
+
+                            <th class="ps-4" style="width: 80px;">
+                                <i class="bi bi-hash me-1"></i>ID
+                            </th>
+
+                            <th>
+                                <i class="bi bi-person me-1"></i>Name
+                            </th>
+
+                            <th>
+                                <i class="bi bi-envelope me-1"></i>Email
+                            </th>
+
+                            <th>
+                                <i class="bi bi-telephone me-1"></i>Phone
+                            </th>
+
+                            <th class="text-center" style="width: 100px;">
+                                <i class="bi bi-gear me-1"></i>Action
+                            </th>
+
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for i in result %}
+
+                        <tr>
+
+                            <!-- ID -->
+                            <td class="ps-4">
+
+                                <span class="customer-id">
+                                    #{{ i.id }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- NAME -->
+                            <td>
+
+                                <div class="d-flex align-items-center gap-2">
+
+                                    <div class="avatar-circle">
+                                        {{ i.username|first|upper }}
+                                    </div>
+
+                                    <span class="customer-name">
+                                        {{ i.username }}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- EMAIL -->
+                            <td>
+
+                                <a href="mailto:{{ i.useremail }}"
+                                   class="customer-contact text-decoration-none">
+
+                                    <i class="bi bi-envelope me-1"></i>
+                                    {{ i.useremail }}
+
+                                </a>
+
+                            </td>
+
+
+                            <!-- PHONE -->
+                            <td>
+
+                                <a href="tel:{{ i.userphone }}"
+                                   class="customer-contact text-decoration-none">
+
+                                    <i class="bi bi-telephone me-1"></i>
+                                    {{ i.userphone }}
+
+                                </a>
+
+                            </td>
+
+
+                            <!-- ACTION -->
+                            <td class="text-center">
+
+                                <a href="{% url 'delete_user' i.id %}"
+                                   class="action-btn action-delete"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   title="Delete customer"
+                                   aria-label="Delete customer"
+                                   onclick="return confirm('Are you sure you want to delete {{ i.username }}?');">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="16"
+                                         height="16"
+                                         fill="currentColor"
+                                         viewBox="0 0 16 16">
+
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                    </svg>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="5" class="text-center empty-customer">
+
+                                <i class="bi bi-person-x empty-icon"></i>
+
+                                <h5 class="empty-heading mt-3">
+                                    No Customers Found
+                                </h5>
+
+                                <p class="empty-text small mb-0">
+                                    Customers will appear here once they register.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- BACK BUTTON -->
+    <!-- ===================================================== -->
+
+    <div class="text-center mt-4">
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="back-dashboard-btn">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- CUSTOM STYLES -->
+<!-- ===================================================== -->
+
+<style>
+
+    /* ==============================
+       PAGE
+    ============================== */
+
+    body {
+        background: #f5eee8 !important;
+        color: #24201d;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+
+    /* ==============================
+       BACK LINK
+    ============================== */
+
+    .back-link {
+        color: #8a817c !important;
+        transition: 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: #24201d !important;
+    }
+
+
+    /* ==============================
+       MESSAGES
+    ============================== */
+
+    .message-box {
+        border-radius: 8px;
+        border: 1px solid #e2d8d0;
+        font-size: 14px;
+    }
+
+
+    /* ==============================
+       PAGE TITLE
+    ============================== */
+
+    .customers-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 38px;
+        font-weight: 600;
+        color: #24201d;
+    }
+
+    .customers-heading i {
+        font-size: 30px;
+    }
+
+    .customers-subtitle {
+        color: #8a817c;
+        letter-spacing: 0.2px;
+    }
+
+
+    /* ==============================
+       CUSTOMER COUNT
+    ============================== */
+
+    .customer-count {
+        background: #24201d;
+        color: #ffffff;
+        padding: 10px 18px;
+        border-radius: 30px;
+        font-size: 12px;
+        letter-spacing: 0.3px;
+    }
+
+
+    /* ==============================
+       CUSTOMER CARD
+    ============================== */
+
+    .customers-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0 !important;
+        border-radius: 0;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(36, 32, 29, 0.06);
+    }
+
+
+    /* ==============================
+       TABLE
+    ============================== */
+
+    .customers-table {
+        color: #24201d;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .customers-table thead {
+        background: #f8f3ee;
+    }
+
+    .customers-table thead th {
+        border-bottom: 1px solid #e2d8d0;
+        padding: 1rem 1rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #8a817c;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .customers-table tbody td {
+        padding: 1rem 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #eee6df;
+    }
+
+    .customers-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .customers-table tbody tr {
+        background: #fffdfb;
+        transition: all 0.2s ease;
+    }
+
+    .customers-table tbody tr:hover {
+        background: #faf5f0;
+    }
+
+
+    /* ==============================
+       CUSTOMER ID
+    ============================== */
+
+    .customer-id {
+        display: inline-block;
+        background: #f3ebe4;
+        color: #6f625a;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+
+    /* ==============================
+       AVATAR
+    ============================== */
+
+    .avatar-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #24201d;
+        color: #ffffff;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-weight: 600;
+        font-size: 0.9rem;
+
+        flex-shrink: 0;
+    }
+
+
+    /* ==============================
+       CUSTOMER NAME
+    ============================== */
+
+    .customer-name {
+        color: #24201d;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+
+    /* ==============================
+       EMAIL / PHONE
+    ============================== */
+
+    .customer-contact {
+        color: #3f3935 !important;
+        font-size: 13px;
+        font-weight: 500;
+        transition: 0.25s ease;
+    }
+
+    .customer-contact i {
+        color: #5a514b !important;
+    }
+
+    .customer-contact:hover {
+        color: #24201d !important;
+    }
+
+
+    /* ==============================
+       ACTION BUTTON
+    ============================== */
+
+    .action-btn {
+        width: 38px;
+        height: 38px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 8px;
+        border: 1px solid #e2d8d0;
+
+        background: #fffdfb;
+        color: #8a817c;
+
+        transition: all 0.25s ease;
+        text-decoration: none;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 14px rgba(36, 32, 29, 0.10);
+    }
+
+
+    /* ==============================
+       DELETE BUTTON
+    ============================== */
+
+    .action-delete:hover {
+        background: #f5e4df;
+        border-color: #d9aaa1;
+        color: #a33b32;
+    }
+
+
+    /* ==============================
+       EMPTY STATE
+    ============================== */
+
+    .empty-customer {
+        padding: 70px 20px !important;
+        background: #fffdfb;
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        color: #b4a79f;
+    }
+
+    .empty-heading {
+        font-family: 'Playfair Display', serif;
+        color: #24201d;
+        font-size: 24px;
+    }
+
+    .empty-text {
+        color: #8a817c;
+    }
+
+
+    /* ==============================
+       BACK DASHBOARD BUTTON
+    ============================== */
+
+    .back-dashboard-btn {
+        display: inline-block;
+
+        padding: 11px 22px;
+
+        border: 1px solid #cfc4bb;
+        background: transparent;
+
+        color: #24201d;
+
+        text-decoration: none;
+        font-size: 12px;
+
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+
+        transition: all 0.25s ease;
+    }
+
+    .back-dashboard-btn:hover {
+        background: #24201d;
+        border-color: #24201d;
+        color: #ffffff;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 576px) {
+
+        .customers-heading {
+            font-size: 30px;
+        }
+
+        .customers-heading i {
+            font-size: 24px;
+        }
+
+        .customer-count {
+            padding: 8px 13px;
+            font-size: 11px;
+        }
+
+        .customers-table thead th,
+        .customers-table tbody td {
+            padding: 0.75rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            font-size: 0.8rem;
+        }
+
+        .customer-name {
+            font-size: 13px;
+        }
+
+        .customer-contact {
+            font-size: 12px;
+        }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+        }
+
+    }
+
+</style>
+
+
+<!-- ===================================================== -->
+<!-- BOOTSTRAP TOOLTIPS -->
+<!-- ===================================================== -->
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var tooltipTriggerList =
+            [].slice.call(
+                document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            );
+
+        tooltipTriggerList.forEach(function (el) {
+            new bootstrap.Tooltip(el);
+        });
+
+    });
+
+</script>
+
+{% include 'footer.html' %}

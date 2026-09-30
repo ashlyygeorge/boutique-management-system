@@ -1,0 +1,609 @@
+{% load static %}
+
+{% include 'header.html' %}
+
+<div class="container mt-5 mb-5">
+
+    <!-- Page Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+
+        <div>
+            <h2 class="fw-bold mb-0 orders-heading">Manage Orders</h2>
+
+            <small class="text-muted">
+                {{ orders|length }} order{{ orders|length|pluralize }} total
+            </small>
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="btn btn-outline-secondary btn-sm dashboard-btn">
+
+            <i class="bi bi-arrow-left me-1"></i> Dashboard
+
+        </a>
+
+    </div>
+
+
+    {% if orders %}
+
+        {% for order in orders %}
+
+        <div class="order-block">
+
+            <!-- ============================================ -->
+            <!-- HEADER LINE -->
+            <!-- ============================================ -->
+
+            <div class="order-header">
+
+                <div>
+
+                    <span class="order-id">
+                        Order #{{ order.id }}
+                    </span>
+
+                    <span class="text-muted ms-2 small">
+                        {{ order.order_date|date:"d M Y, h:i A" }}
+                    </span>
+
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <span class="fw-bold text-success">
+                        ₹{{ order.total_amount }}
+                    </span>
+
+                    <span class="status-pill status-{{ order.order_status|lower }}">
+                        {{ order.order_status }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================ -->
+            <!-- CUSTOMER LINE -->
+            <!-- ============================================ -->
+
+            <div class="order-customer">
+
+                <span>
+                    <strong>{{ order.customer_name }}</strong>
+                    ({{ order.customer }})
+                </span>
+
+                <span class="text-muted">·</span>
+
+                <span>
+                    {{ order.phone }}
+                </span>
+
+                <span class="text-muted">·</span>
+
+                <span class="text-muted">
+                    {{ order.address }}
+                </span>
+
+            </div>
+
+
+            <!-- ============================================ -->
+            <!-- PRODUCTS TABLE -->
+            <!-- ============================================ -->
+
+            <table class="order-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th style="width: 60px;"></th>
+
+                        <th>Product</th>
+
+                        <th class="text-center" style="width: 80px;">
+                            Price
+                        </th>
+
+                        <th class="text-center" style="width: 80px;">
+                            Qty
+                        </th>
+
+                        <th class="text-end" style="width: 100px;">
+                            Total
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in order.orderitems_set.all %}
+
+                    <tr>
+
+                        <td>
+
+                            {% if item.product.product_image %}
+
+                            <img src="{{ item.product.product_image.url }}"
+                                 alt="{{ item.product.product_name }}"
+                                 class="order-thumb">
+
+                            {% else %}
+
+                            <div class="order-thumb bg-light d-flex align-items-center justify-content-center">
+
+                                <i class="bi bi-image text-muted"></i>
+
+                            </div>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+                            {{ item.product.product_name }}
+                        </td>
+
+
+                        <td class="text-center">
+                            ₹{{ item.price }}
+                        </td>
+
+
+                        <td class="text-center">
+                            × {{ item.quantity }}
+                        </td>
+
+
+                        <td class="text-end fw-semibold">
+
+                            {% widthratio item.price 1 item.quantity as item_total %}
+
+                            ₹{{ item_total }}
+
+                        </td>
+
+                    </tr>
+
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5"
+                            class="text-center text-muted py-3">
+
+                            No products in this order.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+            <!-- ============================================ -->
+            <!-- STATUS UPDATE -->
+            <!-- ============================================ -->
+
+            <form method="POST"
+                  action="{% url 'update_order_status' order.id %}"
+                  class="order-status-form">
+
+                {% csrf_token %}
+
+                <label class="small text-muted mb-0 me-2">
+                    Update status:
+                </label>
+
+                <select name="status"
+                        class="form-select form-select-sm">
+
+                    <option value="Pending"
+                        {% if order.order_status == "Pending" %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                    <option value="Confirmed"
+                        {% if order.order_status == "Confirmed" %}selected{% endif %}>
+                        Confirmed
+                    </option>
+
+                    <option value="Shipped"
+                        {% if order.order_status == "Shipped" %}selected{% endif %}>
+                        Shipped
+                    </option>
+
+                    <option value="Delivered"
+                        {% if order.order_status == "Delivered" %}selected{% endif %}>
+                        Delivered
+                    </option>
+
+                    <option value="Cancelled"
+                        {% if order.order_status == "Cancelled" %}selected{% endif %}>
+                        Cancelled
+                    </option>
+
+                </select>
+
+
+                <button type="submit"
+                        class="btn btn-dark btn-sm update-btn">
+
+                    <i class="bi bi-check2"></i>
+                    Update
+
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+    <!-- EMPTY STATE -->
+
+    <div class="empty-orders text-center py-5">
+
+        <i class="bi bi-inbox text-muted empty-icon"></i>
+
+        <h5 class="mt-3 empty-heading">
+            No Orders Yet
+        </h5>
+
+        <p class="text-muted small">
+            Orders will appear here once customers place them.
+        </p>
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="btn btn-dark btn-sm mt-2">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- STYLES -->
+<!-- ===================================================== -->
+
+<style>
+
+    /* ==============================
+       PAGE BACKGROUND
+    ============================== */
+
+    body {
+        background: #f5eee8 !important;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+
+    /* ==============================
+       PAGE TITLE
+    ============================== */
+
+    .orders-heading {
+        font-family: 'Playfair Display', serif;
+        color: #24201d;
+        font-size: 38px;
+    }
+
+
+    /* ==============================
+       DASHBOARD BUTTON
+    ============================== */
+
+    .dashboard-btn {
+        border-radius: 8px;
+    }
+
+
+    /* ==============================
+       ORDER BLOCK
+    ============================== */
+
+    .order-block {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        border-radius: 0;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+
+        box-shadow: 0 6px 20px rgba(36, 32, 29, 0.05);
+
+        transition: all 0.25s ease;
+    }
+
+    .order-block:hover {
+        box-shadow: 0 10px 28px rgba(36, 32, 29, 0.08);
+    }
+
+
+    /* ==============================
+       HEADER LINE
+    ============================== */
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding-bottom: 0.75rem;
+
+        border-bottom: 1px solid #e2d8d0;
+
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+
+    .order-id {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: #212529;
+    }
+
+
+    /* ==============================
+       CUSTOMER LINE
+    ============================== */
+
+    .order-customer {
+        padding: 0.75rem 0;
+
+        font-size: 0.9rem;
+
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+
+    /* ==============================
+       STATUS PILL
+       ORIGINAL COLORS PRESERVED
+    ============================== */
+
+    .status-pill {
+        font-size: 0.75rem;
+        font-weight: 600;
+
+        padding: 0.3rem 0.75rem;
+
+        border-radius: 999px;
+
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-confirmed {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    .status-shipped {
+        background: #cffafe;
+        color: #155e75;
+    }
+
+    .status-delivered {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .status-cancelled {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+
+    /* ==============================
+       PRODUCTS TABLE
+    ============================== */
+
+    .order-table {
+        width: 100%;
+
+        border-collapse: collapse;
+
+        font-size: 0.9rem;
+
+        margin: 0.5rem 0 0.75rem;
+
+        color: #24201d;
+    }
+
+
+    .order-table thead th {
+        font-size: 0.7rem;
+        font-weight: 600;
+
+        text-transform: uppercase;
+
+        color: #6b7280;
+
+        letter-spacing: 0.5px;
+
+        padding: 0.5rem;
+
+        border-bottom: 1px solid #e2d8d0;
+    }
+
+
+    .order-table tbody td {
+        padding: 0.6rem 0.5rem;
+
+        border-bottom: 1px solid #eee6df;
+
+        vertical-align: middle;
+    }
+
+
+    .order-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    .order-table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+
+    .order-table tbody tr:hover {
+        background: #faf5f0;
+    }
+
+
+    /* ==============================
+       PRODUCT THUMBNAIL
+    ============================== */
+
+    .order-thumb {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 8px;
+
+        object-fit: cover;
+
+        border: 1px solid #e2d8d0;
+
+        background: #f8f3ee;
+    }
+
+
+    /* ==============================
+       STATUS FORM
+    ============================== */
+
+    .order-status-form {
+        display: flex;
+
+        align-items: center;
+
+        gap: 0.5rem;
+
+        padding-top: 0.75rem;
+
+        border-top: 1px solid #e2d8d0;
+
+        flex-wrap: wrap;
+    }
+
+
+    .order-status-form .form-select-sm {
+        padding: 0.35rem 2rem 0.35rem 0.75rem;
+
+        border-radius: 8px;
+
+        background-color: #fffdfb;
+
+        border: 1px solid #d8cec6;
+    }
+
+
+    .order-status-form .form-select-sm:focus {
+        border-color: #24201d;
+
+        box-shadow: 0 0 0 0.15rem rgba(36, 32, 29, 0.08);
+    }
+
+
+    .update-btn {
+        border-radius: 8px;
+    }
+
+
+    /* ==============================
+       EMPTY STATE
+    ============================== */
+
+    .empty-orders {
+        background: #fffdfb;
+
+        border: 1px solid #e2d8d0;
+
+        padding: 60px 20px !important;
+
+        box-shadow: 0 6px 20px rgba(36, 32, 29, 0.05);
+    }
+
+
+    .empty-icon {
+        font-size: 3rem;
+    }
+
+
+    .empty-heading {
+        font-family: 'Playfair Display', serif;
+
+        color: #24201d;
+
+        font-size: 24px;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 576px) {
+
+        .orders-heading {
+            font-size: 30px;
+        }
+
+        .order-block {
+            padding: 1rem;
+        }
+
+        .order-table {
+            font-size: 0.8rem;
+        }
+
+        .order-table thead th:nth-child(3),
+        .order-table tbody td:nth-child(3) {
+            display: none;
+        }
+
+        .order-thumb {
+            width: 32px;
+            height: 32px;
+        }
+
+    }
+
+</style>
+
+
+{% include 'footer.html' %}

@@ -1,0 +1,704 @@
+{% load static %}
+
+{% include 'header.html' %}
+
+<style>
+
+    /* =====================================================
+       ELORA MY ORDERS
+    ===================================================== */
+
+    body {
+        background: #f5eee8 !important;
+        color: #24201d;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+
+    .orders-page {
+        padding: 70px 5%;
+        min-height: 70vh;
+    }
+
+
+    /* =====================================================
+       PAGE TITLE
+    ===================================================== */
+
+    .orders-title {
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        font-size: 48px;
+        color: #24201d;
+        margin-bottom: 10px;
+    }
+
+
+    .orders-subtitle {
+        text-align: center;
+        color: #8a817c;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+
+    .orders-count-wrapper {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+
+    .orders-count {
+        display: inline-block;
+        background: #24201d;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 30px;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+
+    /* =====================================================
+       ORDERS GRID - CENTERED
+    ===================================================== */
+
+    .orders-grid {
+        width: 100%;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .orders-grid .row {
+        justify-content: center;
+    }
+
+
+    /* =====================================================
+       ORDER CARD
+    ===================================================== */
+
+    .order-history-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 25px;
+        height: 100%;
+        transition: 0.3s ease;
+    }
+
+
+    .order-history-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 28px rgba(36, 32, 29, 0.08);
+    }
+
+
+    /* =====================================================
+       ORDER HEADER
+    ===================================================== */
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+
+    .order-number {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        color: #24201d;
+        margin-bottom: 6px;
+    }
+
+
+    .order-number i {
+        font-size: 17px;
+    }
+
+
+    .order-date {
+        color: #8a817c;
+        font-size: 11px;
+    }
+
+
+    /* =====================================================
+       STATUS BADGES
+    ===================================================== */
+
+    .order-status {
+        padding: 7px 13px;
+        border-radius: 30px;
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+
+    .status-delivered {
+        background: #e6f0e8;
+        color: #3d7048;
+    }
+
+
+    .status-cancelled {
+        background: #f5e3e0;
+        color: #a33b32;
+    }
+
+
+    .status-pending {
+        background: #f5ead1;
+        color: #80631f;
+    }
+
+
+    .status-other {
+        background: #e3ebf2;
+        color: #41627a;
+    }
+
+
+    /* =====================================================
+       DIVIDER
+    ===================================================== */
+
+    .order-divider {
+        border: 0;
+        border-top: 1px solid #e2d8d0;
+        margin: 18px 0;
+    }
+
+
+    /* =====================================================
+       PRODUCT THUMBNAILS
+    ===================================================== */
+
+    .products-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+
+    .mini-thumb {
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f8f3ee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e2d8d0;
+        color: #9b918b;
+        font-size: 14px;
+        flex-shrink: 0;
+        transition: 0.3s ease;
+    }
+
+
+    .mini-thumb:hover {
+        transform: scale(1.05);
+    }
+
+
+    .mini-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .mini-thumb.more {
+        background: #24201d;
+        color: white;
+        border-color: #24201d;
+        font-size: 11px;
+    }
+
+
+    .item-count {
+        background: #eadfd7;
+        color: #5f554e;
+        padding: 7px 12px;
+        border-radius: 30px;
+        font-size: 10px;
+        margin-left: 2px;
+    }
+
+
+    /* =====================================================
+       TOTAL AMOUNT
+    ===================================================== */
+
+    .total-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f3ee;
+        border: 1px solid #e2d8d0;
+        padding: 15px 18px;
+        margin-bottom: 18px;
+    }
+
+
+    .total-label {
+        display: block;
+        color: #8a817c;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 3px;
+    }
+
+
+    .total-amount {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        color: #24201d;
+        margin: 0;
+    }
+
+
+    .total-icon {
+        font-size: 30px;
+        color: #24201d;
+        opacity: 0.25;
+    }
+
+
+    /* =====================================================
+       VIEW DETAILS BUTTON
+    ===================================================== */
+
+    .view-order-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+
+        width: 100%;
+        padding: 12px 15px;
+
+        background: #24201d;
+        color: white;
+
+        text-decoration: none;
+        text-transform: uppercase;
+
+        font-size: 11px;
+        letter-spacing: 1px;
+
+        transition: 0.3s ease;
+    }
+
+
+    .view-order-btn:hover {
+        background: #4a4039;
+        color: white;
+    }
+
+
+    /* =====================================================
+       EMPTY ORDERS
+    ===================================================== */
+
+    .empty-orders {
+        text-align: center;
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 60px 20px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .empty-icon {
+        font-size: 55px;
+        color: #8b7b70;
+        margin-bottom: 20px;
+    }
+
+
+    .empty-orders h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        color: #24201d;
+        margin-bottom: 12px;
+    }
+
+
+    .empty-orders p {
+        color: #8a817c;
+        font-size: 13px;
+        margin-bottom: 0;
+    }
+
+
+    .shop-btn {
+        display: inline-block;
+        margin-top: 22px;
+        padding: 12px 25px;
+
+        background: #24201d;
+        color: white;
+
+        text-decoration: none;
+        text-transform: uppercase;
+
+        font-size: 11px;
+        letter-spacing: 1px;
+
+        transition: 0.3s ease;
+    }
+
+
+    .shop-btn:hover {
+        background: #4a4039;
+        color: white;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 768px) {
+
+        .orders-page {
+            padding: 50px 5%;
+        }
+
+        .orders-title {
+            font-size: 38px;
+        }
+
+        .orders-grid {
+            max-width: 600px;
+        }
+
+        .order-header {
+            flex-direction: column;
+        }
+
+        .order-status {
+            align-self: flex-start;
+        }
+    }
+
+
+    @media (max-width: 576px) {
+
+        .orders-title {
+            font-size: 34px;
+        }
+
+        .order-history-card {
+            padding: 20px;
+        }
+
+        .order-number {
+            font-size: 20px;
+        }
+
+        .mini-thumb {
+            width: 45px;
+            height: 45px;
+        }
+
+        .empty-orders {
+            padding: 45px 20px;
+        }
+    }
+
+</style>
+
+
+<!-- =====================================================
+     MY ORDERS PAGE
+===================================================== -->
+
+<section class="orders-page">
+
+    <h1 class="orders-title">
+        My Orders
+    </h1>
+
+
+    <p class="orders-subtitle">
+        Track and manage your orders
+    </p>
+
+
+    {% if orders %}
+
+    <div class="orders-count-wrapper">
+
+        <span class="orders-count">
+
+            <i class="bi bi-receipt me-1"></i>
+
+            {{ orders|length }}
+            order{{ orders|length|pluralize }}
+
+        </span>
+
+    </div>
+
+
+    <!-- =================================================
+         ORDERS
+    ================================================== -->
+
+    <div class="orders-grid">
+
+        <div class="row g-4">
+
+            {% for order in orders %}
+
+            <div class="col-md-6">
+
+                <div class="order-history-card">
+
+
+                    <!-- ORDER HEADER -->
+
+                    <div class="order-header">
+
+                        <div>
+
+                            <div class="order-number">
+
+                                <i class="bi bi-receipt me-2"></i>
+
+                                Order #{{ order.id }}
+
+                            </div>
+
+
+                            <div class="order-date">
+
+                                <i class="bi bi-calendar3 me-1"></i>
+
+                                {{ order.order_date|date:"d M Y, h:i A" }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        {% if order.order_status == "Delivered" %}
+
+                        <span class="order-status status-delivered">
+
+                            <i class="bi bi-check-circle me-1"></i>
+
+                            {{ order.order_status }}
+
+                        </span>
+
+
+                        {% elif order.order_status == "Cancelled" %}
+
+                        <span class="order-status status-cancelled">
+
+                            <i class="bi bi-x-circle me-1"></i>
+
+                            {{ order.order_status }}
+
+                        </span>
+
+
+                        {% elif order.order_status == "Pending" %}
+
+                        <span class="order-status status-pending">
+
+                            <i class="bi bi-clock-history me-1"></i>
+
+                            {{ order.order_status }}
+
+                        </span>
+
+
+                        {% else %}
+
+                        <span class="order-status status-other">
+
+                            <i class="bi bi-truck me-1"></i>
+
+                            {{ order.order_status }}
+
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <hr class="order-divider">
+
+
+                    <!-- =================================================
+                         PRODUCT THUMBNAILS
+                    ================================================== -->
+
+                    <div class="products-section">
+
+                        {% for item in order.orderitems_set.all|slice:":4" %}
+
+                        <div class="mini-thumb"
+                             title="{{ item.product.product_name }}">
+
+                            {% if item.product.product_image %}
+
+                            <img src="{{ item.product.product_image.url }}"
+                                 alt="{{ item.product.product_name }}">
+
+                            {% else %}
+
+                            <i class="bi bi-image"></i>
+
+                            {% endif %}
+
+                        </div>
+
+                        {% endfor %}
+
+
+                        {% if order.orderitems_set.count > 4 %}
+
+                        <div class="mini-thumb more">
+
+                            +{{ order.orderitems_set.count|add:"-4" }}
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <span class="item-count">
+
+                            <i class="bi bi-box me-1"></i>
+
+                            {{ order.orderitems_set.count }}
+                            item{{ order.orderitems_set.count|pluralize }}
+
+                        </span>
+
+                    </div>
+
+
+                    <hr class="order-divider">
+
+
+                    <!-- =================================================
+                         TOTAL
+                    ================================================== -->
+
+                    <div class="total-section">
+
+                        <div>
+
+                            <span class="total-label">
+
+                                <i class="bi bi-currency-rupee me-1"></i>
+
+                                Total Amount
+
+                            </span>
+
+
+                            <h4 class="total-amount">
+
+                                ₹{{ order.total_amount }}
+
+                            </h4>
+
+                        </div>
+
+
+                        <i class="bi bi-cash-stack total-icon"></i>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         VIEW DETAILS
+                    ================================================== -->
+
+                    <a href="{% url 'order_details' order.id %}"
+                       class="view-order-btn">
+
+                        <i class="bi bi-eye"></i>
+
+                        View Details
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =================================================
+         EMPTY STATE
+    ================================================== -->
+
+    <div class="empty-orders">
+
+        <div class="empty-icon">
+
+            <i class="bi bi-bag-x"></i>
+
+        </div>
+
+
+        <h3>
+            No Orders Yet
+        </h3>
+
+
+        <p>
+            You haven't placed any orders yet.
+            Start exploring our collection!
+        </p>
+
+
+        <a href="{% url 'product_list' %}"
+           class="shop-btn">
+
+            <i class="bi bi-bag-heart me-1"></i>
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+</section>
+
+
+{% include 'footer.html' %}

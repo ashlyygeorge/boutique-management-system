@@ -1,0 +1,16 @@
+{% load static %}
+{% include 'header.html' %}
+
+<div class="container text-center mt-5 mb-5">
+
+    <h2 class="text-success mb-3">Order Placed Successfully!</h2>
+
+    <p>Thank you for your order.</p>
+
+    <a href="{% url 'product_list' %}" class="btn btn-dark mt-3">
+        Continue Shopping
+    </a>
+
+</div>
+
+{% include 'footer.html' %}

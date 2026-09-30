@@ -1,0 +1,166 @@
+{% load static %}
+
+<footer id="footer" class="mt-5 border-top">
+
+
+<!-- Main Footer -->
+<div class="container py-5">
+
+    <div class="row">
+
+        <!-- ELORA -->
+        <div class="col-md-3 col-sm-6 mb-4">
+
+            <a href="{% url 'index' %}"
+               class="text-decoration-none text-dark">
+
+                <span style="
+                    font-size: 28px;
+                    letter-spacing: 4px;
+                    font-weight: 500;
+                ">
+                    ELORA
+                </span>
+
+            </a>
+
+            <p class="mt-4 text-muted">
+                ELORA ,
+                From everyday elegance to moments 
+                worth remembering, ELORA brings you thoughtfully curated styles that celebrate femininity, confidence and your unique sense of fashion.
+
+        </div>
+
+
+        <!-- Quick Links -->
+        <div class="col-md-3 col-sm-6 mb-4">
+
+            <h5 class="text-uppercase mb-4">
+                Quick Links
+            </h5>
+
+            <ul class="list-unstyled">
+
+                <li class="mb-2">
+                    <a href="{% url 'index' %}"
+                       class="text-dark text-decoration-none">
+                        Home
+                    </a>
+                </li>
+
+                <li class="mb-2">
+                    <a href="{% url 'product_list' %}"
+                       class="text-dark text-decoration-none">
+                        Shop
+                    </a>
+                </li>
+
+                {% if request.session.user %}
+                <li class="mb-2">
+                    <a href="{% url 'cart' %}"
+                       class="text-dark text-decoration-none">
+                        My Cart
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+
+        <!-- Help & Info -->
+<!-- Discover ELORA -->
+<div class="col-md-3 col-sm-6 mb-4">
+
+    <h5 class="text-uppercase mb-4">
+        Discover ELORA
+    </h5>
+
+    <ul class="list-unstyled">
+
+        <li class="mb-2">
+            <span class="text-dark">
+                Timeless Elegance
+            </span>
+        </li>
+
+        <li class="mb-2">
+            <span class="text-dark">
+                Curated With Love
+            </span>
+        </li>
+
+        <li class="mb-2">
+            <span class="text-dark">
+                Made For Every Moment
+            </span>
+        </li>
+
+        <li class="mb-2">
+            <span class="text-dark">
+                Your Style, Your Story
+            </span>
+        </li>
+
+    </ul>
+
+</div>
+
+        <!-- Contact -->
+        <div class="col-md-3 col-sm-6 mb-4">
+
+            <h5 class="text-uppercase mb-4">
+                Contact Us
+            </h5>
+
+            <p class="mb-2">
+                Email:
+                <a href="mailto:boutique@gmail.com"
+                   class="text-dark text-decoration-none">
+                    eloraboutique@gmail.com
+                </a>
+            </p>
+
+            <p class="mb-0">
+                Phone:
+                <a href="tel:+91997654321"
+                   class="text-dark text-decoration-none">
+                    +91 9876544211
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bottom Footer -->
+<div class="border-top">
+
+    <div class="container py-4">
+
+        <div class="row align-items-center">
+
+            <!-- Shipping & Payment -->
+
+
+
+            <!-- Copyright -->
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                <p class="mb-0 text-muted">
+                    © 2026 ELORA. All rights reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</footer>

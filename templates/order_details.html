@@ -1,0 +1,284 @@
+{% load static %} 
+ 
+{% include 'header.html' %} 
+ 
+<div class="container mt-5 mb-5"> 
+ 
+    <!-- Breadcrumb / Back --> 
+    <div class="mb-4"> 
+        <a href="{% url 'order_history' %}" class="text-decoration-none text-muted small"> 
+            <i class="bi bi-arrow-left me-1"></i> Back to Order History 
+        </a> 
+    </div> 
+ 
+    <div class="row justify-content-center"> 
+        <div class="col-lg-10 col-md-11"> 
+ 
+            <!-- ===================================================== --> 
+            <!-- ORDER HEADER --> 
+            <!-- ===================================================== --> 
+            <div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-2"> 
+                <div> 
+                    <h2 class="fw-bold mb-1"> 
+                        <i class="bi bi-receipt me-2"></i>Order #{{ order.id }} 
+                    </h2> 
+                    <p class="text-muted small mb-0"> 
+                        <i class="bi bi-calendar3 me-1"></i> 
+                        {{ order.order_date|date:"d M Y, h:i A" }} 
+                    </p> 
+                </div> 
+ 
+                <!-- Order Status Badge --> 
+                {% if order.order_status == "Delivered" %} 
+                <span class="badge bg-success rounded-pill px-3 py-2 fs-6"> 
+                    <i class="bi bi-check-circle me-1"></i> {{ order.order_status }} 
+                </span> 
+                {% elif order.order_status == "Cancelled" %} 
+                <span class="badge bg-danger rounded-pill px-3 py-2 fs-6"> 
+                    <i class="bi bi-x-circle me-1"></i> {{ order.order_status }} 
+                </span> 
+                {% elif order.order_status == "Pending" %} 
+                <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fs-6"> 
+                    <i class="bi bi-clock-history me-1"></i> {{ order.order_status }} 
+                </span> 
+                {% else %} 
+                <span class="badge bg-info text-dark rounded-pill px-3 py-2 fs-6"> 
+                    <i class="bi bi-truck me-1"></i> {{ order.order_status }} 
+                </span> 
+                {% endif %} 
+            </div> 
+ 
+            <!-- ===================================================== --> 
+            <!-- CUSTOMER INFO CARD --> 
+            <!-- ===================================================== --> 
+            <div class="card border-0 shadow-sm order-card mb-4"> 
+                <div class="card-body p-4"> 
+                    <h5 class="fw-bold mb-4"> 
+                        <i class="bi bi-person-vcard me-2"></i>Customer Information 
+                    </h5> 
+ 
+                    <div class="row g-3"> 
+                        <!-- Name --> 
+                        <div class="col-md-6"> 
+                            <div class="info-box"> 
+                                <small class="text-muted text-uppercase fw-semibold"> 
+                                    <i class="bi bi-person me-1"></i> Name 
+                                </small> 
+                                <p class="fw-semibold mb-0 mt-1">{{ order.customer_name }}</p> 
+                            </div> 
+                        </div> 
+ 
+                        <!-- Phone --> 
+                        <div class="col-md-6"> 
+                            <div class="info-box"> 
+                                <small class="text-muted text-uppercase fw-semibold"> 
+                                    <i class="bi bi-telephone me-1"></i> Phone 
+                                </small> 
+                                <p class="fw-semibold mb-0 mt-1"> 
+                                    <a href="tel:{{ order.phone }}" class="text-decoration-none text-dark"> 
+                                        {{ order.phone }} 
+                                    </a> 
+                                </p> 
+                            </div> 
+                        </div> 
+ 
+                        <!-- Address --> 
+                        <div class="col-12"> 
+                            <div class="info-box"> 
+                                <small class="text-muted text-uppercase fw-semibold"> 
+                                    <i class="bi bi-geo-alt me-1"></i> Delivery Address 
+                                </small> 
+                                <p class="fw-semibold mb-0 mt-1">{{ order.address }}</p> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+ 
+            <!-- ===================================================== --> 
+            <!-- ORDERED PRODUCTS --> 
+            <!-- ===================================================== --> 
+            <div class="card border-0 shadow-sm order-card mb-4"> 
+                <div class="card-body p-4"> 
+                    <h5 class="fw-bold mb-4"> 
+                        <i class="bi bi-bag-check me-2"></i>Ordered Products 
+                    </h5> 
+ 
+                    {% for item in order.orderitems_set.all %} 
+                    <div class="product-row {% if not forloop.last %}mb-3{% endif %}"> 
+                        <div class="row align-items-center g-3"> 
+ 
+                            <!-- Product Image --> 
+                            <div class="col-md-2 col-3"> 
+                                <div class="product-thumb"> 
+                                    {% if item.product.product_image %} 
+                                    <img src="{{ item.product.product_image.url }}" 
+                                         alt="{{ item.product.product_name }}"> 
+                                    {% else %} 
+                                    <i class="bi bi-image text-muted"></i> 
+                                    {% endif %} 
+                                </div> 
+                            </div> 
+ 
+                            <!-- Product Name --> 
+                            <div class="col-md-4 col-9"> 
+                                <small class="text-muted text-uppercase fw-semibold d-block mb-1"> 
+                                    Product 
+                                </small> 
+                                <h6 class="fw-bold mb-0">{{ item.product.product_name }}</h6> 
+                                <small class="text-muted"> 
+                                    ₹{{ item.price }} × {{ item.quantity }} 
+                                </small> 
+                            </div> 
+ 
+                            <!-- Quantity --> 
+                            <div class="col-md-3 col-6 text-md-center"> 
+                                <small class="text-muted text-uppercase fw-semibold d-block mb-1"> 
+                                    Quantity 
+                                </small> 
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 py-2"> 
+                                    <i class="bi bi-box me-1"></i>{{ item.quantity }} 
+                                </span> 
+                            </div> 
+ 
+                            <!-- Item Total --> 
+                            <div class="col-md-3 col-6 text-md-end"> 
+                                <small class="text-muted text-uppercase fw-semibold d-block mb-1"> 
+                                    Item Total 
+                                </small> 
+                                <h6 class="fw-bold text-success mb-0"> 
+                                    ₹{{ item.item_total }} 
+                                </h6> 
+                            </div> 
+ 
+                        </div> 
+                    </div> 
+                    {% empty %} 
+                    <div class="text-center py-4"> 
+                        <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i> 
+                        <p class="text-muted mt-2 mb-0">No product details available.</p> 
+                    </div> 
+                    {% endfor %} 
+ 
+                </div> 
+            </div> 
+ 
+            <!-- ===================================================== --> 
+            <!-- TOTAL AMOUNT CARD --> 
+            <!-- ===================================================== --> 
+            <div class="card border-0 shadow-sm order-card mb-4"> 
+                <div class="card-body p-4"> 
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"> 
+                        <div> 
+                            <small class="text-muted text-uppercase fw-semibold"> 
+                                <i class="bi bi-currency-rupee me-1"></i> Total Amount 
+                            </small> 
+                            <h2 class="fw-bold text-success mb-0 mt-1"> 
+                                ₹{{ order.total_amount }} 
+                            </h2> 
+                        </div> 
+                        <i class="bi bi-cash-stack text-success" style="font-size: 3rem; opacity: 0.3;"></i> 
+                    </div> 
+                </div> 
+            </div> 
+ 
+            <!-- ===================================================== --> 
+            <!-- ACTION BUTTONS --> 
+            <!-- ===================================================== --> 
+            <div class="d-flex flex-wrap gap-2 justify-content-between"> 
+ 
+                <a href="{% url 'order_history' %}" class="btn btn-outline-secondary px-4 rounded-3"> 
+                    <i class="bi bi-arrow-left me-1"></i> Back to Order History 
+                </a> 
+ 
+                <div class="d-flex gap-2"> 
+                    <!-- View Details (if exists) --> 
+                    <a href="{% url 'order_details' order.id %}" 
+                       class="btn btn-dark px-4 rounded-3"> 
+                        <i class="bi bi-eye me-1"></i> View Details 
+                    </a> 
+ 
+                    <!-- Cancel Order (conditional) --> 
+                    {% if order.order_status == "Pending" or order.order_status == "Confirmed" %} 
+                    <a href="{% url 'cancel_order' order.id %}" 
+                       class="btn btn-outline-danger px-4 rounded-3" 
+                       onclick="return confirm('Are you sure you want to cancel this order?')"> 
+                        <i class="bi bi-x-circle me-1"></i> Cancel Order 
+                    </a> 
+                    {% endif %} 
+                </div> 
+ 
+            </div> 
+ 
+        </div> 
+    </div> 
+ 
+</div> 
+ 
+<!-- ===================================================== --> 
+<!-- CUSTOM STYLES --> 
+<!-- ===================================================== --> 
+<style> 
+    .order-card { 
+        border-radius: 16px; 
+        overflow: hidden; 
+    } 
+ 
+    /* Info boxes (customer info) */ 
+    .info-box { 
+        padding: 1rem; 
+        border-radius: 12px; 
+        background: #f8f9fa; 
+        height: 100%; 
+    } 
+ 
+    /* Product thumbnail */ 
+    .product-thumb { 
+        width: 100%; 
+        aspect-ratio: 1 / 1; 
+        max-width: 100px; 
+        border-radius: 12px; 
+        overflow: hidden; 
+        background: #f8f9fa; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        border: 1px solid #e5e7eb; 
+    } 
+ 
+    .product-thumb img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        transition: transform 0.3s ease; 
+    } 
+ 
+    .product-thumb:hover img { 
+        transform: scale(1.08); 
+    } 
+ 
+    .product-thumb i { 
+        font-size: 1.75rem; 
+    } 
+ 
+    /* Product rows */ 
+    .product-row { 
+        padding: 1rem; 
+        border-radius: 12px; 
+        background: #ffffff; 
+        border: 1px solid #f1f3f5; 
+        transition: all 0.2s ease; 
+    } 
+ 
+    .product-row:hover { 
+        border-color: #e5e7eb; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); 
+    } 
+ 
+    /* Buttons rounded */ 
+    .btn { 
+        border-radius: 10px; 
+    } 
+</style> 
+ 
+{% include 'footer.html' %}

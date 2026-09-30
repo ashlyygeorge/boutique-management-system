@@ -1,0 +1,278 @@
+
+{% load static %}
+
+{% include 'header.html' %}
+
+<style>
+
+    body {
+        background: #f5eee8;
+        color: #24201d;
+    }
+
+    .wishlist-page {
+        padding: 70px 5%;
+        min-height: 70vh;
+    }
+
+    .wishlist-title {
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+
+    .wishlist-subtitle {
+        text-align: center;
+        color: #8a817c;
+        margin-bottom: 45px;
+    }
+
+    .wishlist-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 20px;
+        height: 100%;
+        transition: 0.3s ease;
+    }
+
+    .wishlist-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .wishlist-image {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;
+        background: #f8f3ee;
+        margin-bottom: 20px;
+    }
+
+    .wishlist-product-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+
+    .wishlist-category {
+        color: #8b7b70;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .wishlist-price {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 18px;
+    }
+
+    .wishlist-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .wishlist-btn {
+        flex: 1;
+        min-width: 130px;
+        padding: 11px 15px;
+        border: none;
+        text-decoration: none;
+        text-align: center;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s ease;
+    }
+
+    .cart-btn {
+        background: #24201d;
+        color: white;
+    }
+
+    .cart-btn:hover {
+        background: #4a4039;
+        color: white;
+    }
+
+    .remove-btn {
+        background: #eadfd7;
+        color: #24201d;
+    }
+
+    .remove-btn:hover {
+        background: #d8c9be;
+        color: #24201d;
+    }
+
+    .empty-wishlist {
+        text-align: center;
+        background: #fffdfb;
+        border: 1px solid #e2d8d0;
+        padding: 60px 20px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .empty-heart {
+        font-size: 55px;
+        color: #dc2626;
+        margin-bottom: 20px;
+    }
+
+    .empty-wishlist h3 {
+        font-family: 'Playfair Display', serif;
+        margin-bottom: 12px;
+    }
+
+    .shop-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 25px;
+        background: #24201d;
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .shop-btn:hover {
+        background: #4a4039;
+        color: white;
+    }
+
+</style>
+
+
+<section class="wishlist-page">
+
+    <h1 class="wishlist-title">
+        My Wishlist
+    </h1>
+
+    <p class="wishlist-subtitle">
+        Your saved boutique favourites
+    </p>
+
+
+    {% if wishlist_items %}
+
+        <div class="container">
+
+            <div class="row g-4">
+
+                {% for item in wishlist_items %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="wishlist-card">
+
+                            {% if item.product.product_image %}
+
+                                <img src="{{ item.product.product_image.url }}"
+                                     alt="{{ item.product.product_name }}"
+                                     class="wishlist-image">
+
+                            {% else %}
+
+                                <div class="wishlist-image d-flex align-items-center justify-content-center">
+                                    <span class="text-muted">
+                                        No image
+                                    </span>
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="wishlist-category">
+                                {{ item.product.product_category }}
+                            </div>
+
+
+                            <div class="wishlist-product-name">
+                                {{ item.product.product_name }}
+                            </div>
+
+
+                            <div class="wishlist-price">
+                                ₹{{ item.product.product_price }}
+                            </div>
+
+
+                            <div class="wishlist-buttons">
+
+                                {% if item.product.stock > 0 and item.product.status %}
+
+                                    <a href="{% url 'add_to_cart' item.product.id %}"
+                                       class="wishlist-btn cart-btn">
+
+                                        Add to Cart
+
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="wishlist-btn remove-btn"
+                                          style="cursor: default;">
+
+                                        Out of Stock
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                <a href="{% url 'remove_from_wishlist' item.product.id %}?next=/wishlist"
+                                   class="wishlist-btn remove-btn">
+
+                                    Remove
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-wishlist">
+
+            <div class="empty-heart">
+                ♡
+            </div>
+
+            <h3>
+                Your Wishlist is Empty
+            </h3>
+
+            <p class="text-muted">
+                Save your favourite boutique products here and come back to them later.
+            </p>
+
+            <a href="{% url 'product_list' %}"
+               class="shop-btn">
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+{% include 'footer.html' %}
+

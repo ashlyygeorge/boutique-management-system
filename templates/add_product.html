@@ -1,0 +1,959 @@
+{% load static %}
+
+{% include 'header.html' %}
+
+
+
+
+<div class="container add-page">
+
+    <!-- ==============================
+         BACK BUTTON
+    ============================== -->
+
+    <div class="mb-4">
+
+
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-8 col-lg-9 col-md-11">
+
+            <!-- ==============================
+                 ADD PRODUCT CARD
+            ============================== -->
+
+            <div class="card add-card">
+
+                <div class="card-body">
+
+
+                    <!-- ==============================
+                         HEADER
+                    ============================== -->
+
+                    <div class="text-center add-header">
+
+                        <div class="icon-circle mx-auto mb-3">
+
+                            <i class="bi bi-plus-circle"></i>
+
+                        </div>
+
+
+                        <h3 class="add-title">
+
+                            Add New Product
+
+                        </h3>
+
+
+                        <!-- <p class="add-subtitle mb-0">
+
+                            Fill in the details below to add a product to your boutique
+
+                        </p> -->
+
+                    </div>
+
+
+                    <!-- ==============================
+                         FORM
+                    ============================== -->
+
+                    <form method="POST"
+                          enctype="multipart/form-data"
+                          id="addProductForm">
+
+                        {% csrf_token %}
+
+
+                        <!-- ==============================
+                             PRODUCT NAME
+                        ============================== -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold text-uppercase">
+
+                                <i class="bi bi-tag me-1"></i>
+
+                                Product Name
+
+                            </label>
+
+
+                            <input type="text"
+                                   name="product_name"
+                                   class="form-control form-control-lg"
+                                   placeholder="e.g. Short kurti"
+                                   required>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             CATEGORY
+                        ============================== -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold text-uppercase">
+
+                                <i class="bi bi-tags me-1"></i>
+
+                                Category
+
+                            </label>
+
+
+                            <select name="product_category"
+                                    class="form-select form-select-lg"
+                                    required>
+
+                                <option value="">
+                                    Select Category
+                                </option>
+
+                                <option value="Dresses">
+                                    Dresses
+                                </option>
+
+                                <option value="Kurtis">
+                                    Kurtis
+                                </option>
+
+                                <option value="Jumpsuits">
+                                    Jumpsuits
+                                </option>
+
+                                <option value="Anarkalis">
+                                    Anarkalis
+                                </option>
+
+                                <option value="Bodycon Dresses">
+                                    Bodycon Dresses
+                                </option>
+
+                                <option value="Sharara">
+                                    Sharara
+                                </option>
+
+                                <option value="Others">
+                                    Others
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             PRICE + STOCK
+                        ============================== -->
+
+                        <div class="row g-3 mb-4">
+
+
+                            <!-- PRICE -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold text-uppercase">
+
+                                    <i class="bi bi-currency-rupee me-1"></i>
+
+                                    Price
+
+                                </label>
+
+
+                                <input type="number"
+                                       name="product_price"
+                                       step="0.01"
+                                       min="0"
+                                       class="form-control form-control-lg"
+                                       placeholder="0.00"
+                                       required>
+
+                            </div>
+
+
+                            <!-- STOCK -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold text-uppercase">
+
+                                    <i class="bi bi-box-seam me-1"></i>
+
+                                    Stock
+
+                                </label>
+
+
+                                <input type="number"
+                                       name="stock"
+                                       min="0"
+                                       class="form-control form-control-lg"
+                                       placeholder="0"
+                                       required>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             DESCRIPTION
+                        ============================== -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold text-uppercase">
+
+                                <i class="bi bi-file-text me-1"></i>
+
+                                Description
+
+                            </label>
+
+
+                            <textarea name="product_description"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Describe the product — fabric, style, size, etc."
+                                      required></textarea>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             AVAILABLE SIZES
+                        ============================== -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold text-uppercase">
+
+                                <i class="bi bi-rulers me-1"></i>
+
+                                Available Sizes
+
+                            </label>
+
+
+                            <div class="size-section">
+
+
+                                <div class="size-title">
+
+                                    Select Available Sizes
+
+                                </div>
+
+
+                                <small class="size-help">
+
+                                    Select the sizes currently available for this product.
+
+                                </small>
+
+
+                                <div class="size-options">
+
+
+                                    <!-- XS -->
+
+                                    <label class="size-option">
+
+                                        <input type="checkbox"
+                                               name="sizes"
+                                               value="XS">
+
+                                        <span class="size-box">
+
+                                            XS
+
+                                        </span>
+
+                                    </label>
+
+
+                                    <!-- S -->
+
+                                    <label class="size-option">
+
+                                        <input type="checkbox"
+                                               name="sizes"
+                                               value="S">
+
+                                        <span class="size-box">
+
+                                            S
+
+                                        </span>
+
+                                    </label>
+
+
+                                    <!-- M -->
+
+                                    <label class="size-option">
+
+                                        <input type="checkbox"
+                                               name="sizes"
+                                               value="M">
+
+                                        <span class="size-box">
+
+                                            M
+
+                                        </span>
+
+                                    </label>
+
+
+                                    <!-- L -->
+
+                                    <label class="size-option">
+
+                                        <input type="checkbox"
+                                               name="sizes"
+                                               value="L">
+
+                                        <span class="size-box">
+
+                                            L
+
+                                        </span>
+
+                                    </label>
+
+
+                                    <!-- XL -->
+
+                                    <label class="size-option">
+
+                                        <input type="checkbox"
+                                               name="sizes"
+                                               value="XL">
+
+                                        <span class="size-box">
+
+                                            XL
+
+                                        </span>
+
+                                    </label>
+
+
+                                    <!-- XXL -->
+
+                                    <label class="size-option">
+
+                                        <input type="checkbox"
+                                               name="sizes"
+                                               value="XXL">
+
+                                        <span class="size-box">
+
+                                            XXL
+
+                                        </span>
+
+                                    </label>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             PRODUCT IMAGE
+                        ============================== -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold text-uppercase">
+
+                                <i class="bi bi-upload me-1"></i>
+
+                                Product Image
+
+                            </label>
+
+
+                            <input type="file"
+                                   name="product_image"
+                                   accept="image/*"
+                                   class="form-control"
+                                   id="imageInput"
+                                   required
+                                   onchange="previewImage(event)">
+
+
+                            <small class="help-text">
+
+                                Upload a clear image (JPG, PNG).
+                                Recommended size: 800×800px.
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             IMAGE PREVIEW
+                        ============================== -->
+
+                        <div id="imagePreviewBox"
+                             class="mb-4 text-center d-none">
+
+
+                            <label class="preview-label fw-semibold text-uppercase d-block mb-2">
+
+                                PREVIEW
+
+                            </label>
+
+
+                            <div class="preview-wrapper mx-auto">
+
+                                <img id="imagePreview"
+                                     class="preview-image"
+                                     alt="Preview">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             STATUS
+                        ============================== -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold text-uppercase">
+
+                                <i class="bi bi-toggle-on me-1"></i>
+
+                                Status
+
+                            </label>
+
+
+                            <div class="form-check form-switch status-box">
+
+
+                                <input type="checkbox"
+                                       name="status"
+                                       class="form-check-input"
+                                       id="statusSwitch"
+                                       checked>
+
+
+                                <label class="form-check-label fw-semibold"
+                                       for="statusSwitch">
+
+                                    Available for purchase
+
+                                </label>
+
+
+                                <div class="status-description mt-1">
+
+                                    Uncheck to hide this product from customers.
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==============================
+                             DIVIDER
+                        ============================== -->
+
+                        <hr class="add-divider my-4">
+
+
+                        <!-- ==============================
+                             ACTION BUTTONS
+                        ============================== -->
+
+                        <div class="d-flex gap-3 action-buttons">
+
+
+                            <!-- ADD PRODUCT -->
+
+                            <button type="submit"
+                                    class="btn add-btn btn-lg flex-fill py-3">
+
+                                <i class="bi bi-check-circle me-2"></i>
+
+                                Add Product
+
+                            </button>
+
+
+                            <!-- CANCEL -->
+
+                            <a href="{% url 'product_list' %}"
+                               class="btn cancel-btn btn-lg py-3 px-4">
+
+                                Cancel
+
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    /* ==============================
+       ADD PRODUCT PAGE
+       ELORA STYLE
+    ============================== */
+
+    body {
+        background-color: #f5eee8 !important;
+        color: #24201d;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .add-page {
+        padding-top: 45px;
+        padding-bottom: 70px;
+    }
+
+    /* Back Button */
+    .back-link {
+        color: #8a817c !important;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        transition: 0.3s;
+    }
+
+    .back-link:hover {
+        color: #24201d !important;
+    }
+
+    /* Main Card */
+    .add-card {
+        background: #fffdfb;
+        border: 1px solid #e2d8d0 !important;
+        border-radius: 0 !important;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(36, 32, 29, 0.07) !important;
+    }
+
+    .add-card .card-body {
+        padding: 45px !important;
+    }
+
+    /* Header */
+    .add-header {
+        margin-bottom: 35px;
+    }
+
+    .add-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 38px;
+        font-weight: 600;
+        color: #24201d;
+        margin-bottom: 5px;
+    }
+
+    .add-subtitle {
+        color: #8a817c !important;
+        font-size: 13px;
+    }
+
+
+    /* Labels */
+    .form-label {
+        color: #6f655f !important;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11px !important;
+        letter-spacing: 1px;
+    }
+
+    /* Inputs */
+    .form-control,
+    .form-select {
+        background-color: #fffdfb !important;
+        border: 1px solid #e2d8d0 !important;
+        color: #24201d !important;
+        border-radius: 0 !important;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: none !important;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #fffdfb !important;
+        border-color: #24201d !important;
+        box-shadow: 0 0 0 3px rgba(36, 32, 29, 0.05) !important;
+    }
+
+    .form-control::placeholder {
+        color: #aaa09a;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+    }
+
+    /* Small Help Text */
+    .help-text {
+        color: #9a918b !important;
+        font-size: 11px;
+        margin-top: 7px;
+        display: block;
+    }
+
+    /* ==============================
+       AVAILABLE SIZES
+    ============================== */
+
+    .size-section {
+        background: #f8f3ee !important;
+        border: 1px solid #e2d8d0;
+        border-radius: 0 !important;
+        padding: 20px;
+    }
+
+    .size-title {
+        color: #24201d;
+        font-family: 'Playfair Display', serif;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .size-help {
+        color: #9a918b !important;
+        font-size: 11px;
+        margin-bottom: 18px;
+        display: block;
+    }
+
+    .size-options {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .size-option {
+        position: relative;
+        display: block;
+    }
+
+    /* Hide actual checkbox */
+    .size-option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Size square */
+    .size-box {
+        width: 58px;
+        height: 58px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #fffdfb;
+        border: 1px solid #cfc4bb;
+
+        color: #24201d;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+
+        cursor: pointer;
+
+        transition: all 0.25s ease;
+    }
+
+    .size-box:hover {
+        border-color: #24201d;
+        transform: translateY(-2px);
+    }
+
+    /* Selected Size */
+    .size-option input:checked + .size-box {
+        background: #24201d;
+        border-color: #24201d;
+        color: #ffffff;
+    }
+
+    /* ==============================
+       IMAGE PREVIEW
+    ============================== */
+
+    .preview-wrapper {
+        width: 220px;
+        height: 220px;
+
+        border-radius: 0;
+
+        overflow: hidden;
+
+        background: #f8f3ee;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid #e2d8d0;
+
+        transition: 0.3s;
+    }
+
+    .preview-wrapper:hover {
+        border-color: #cfc2b9;
+        box-shadow: 0 8px 20px rgba(36, 32, 29, 0.07);
+    }
+
+    .preview-image {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        padding: 10px;
+    }
+
+    .preview-label {
+        color: #6f655f !important;
+        font-size: 11px !important;
+        letter-spacing: 1px;
+    }
+
+    /* ==============================
+       FILE INPUT
+    ============================== */
+
+    input[type="file"] {
+        padding: 12px;
+    }
+
+    input[type="file"]::file-selector-button {
+        background: #f8f3ee;
+        color: #24201d;
+
+        border: 1px solid #e2d8d0;
+
+        padding: 8px 14px;
+
+        margin-right: 12px;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11px;
+
+        cursor: pointer;
+    }
+
+    /* ==============================
+       STATUS BOX
+    ============================== */
+
+    .status-box {
+        background: #f8f3ee !important;
+        border: 1px solid #e2d8d0;
+        border-radius: 0 !important;
+        padding: 16px !important;
+    }
+
+    .status-box .form-check-label {
+        color: #24201d;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13px;
+    }
+
+    .status-description {
+        color: #8a817c !important;
+        font-size: 11px;
+    }
+
+    /* Switch */
+    .form-check-input {
+        width: 2.5em;
+        height: 1.25em;
+
+        margin-top: 0.1em;
+
+        border-color: #cfc5be !important;
+
+        box-shadow: none !important;
+    }
+
+    .form-check-input:checked {
+        background-color: #198754;
+        border-color: #198754 !important;
+    }
+
+    /* ==============================
+       DIVIDER
+    ============================== */
+
+    .add-divider {
+        border-color: #e2d8d0;
+        opacity: 1;
+    }
+
+    /* ==============================
+       BUTTONS
+    ============================== */
+
+    .add-btn {
+        background: #24201d !important;
+        color: #ffffff !important;
+
+        border: 1px solid #24201d !important;
+        border-radius: 0 !important;
+
+        font-family: 'Montserrat', sans-serif;
+
+        font-size: 12px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+
+        transition: all 0.3s ease;
+    }
+
+    .add-btn:hover {
+        background: #3a342f !important;
+        border-color: #3a342f !important;
+
+        transform: translateY(-2px);
+    }
+
+    .cancel-btn {
+        background: transparent !important;
+        color: #24201d !important;
+
+        border: 1px solid #cfc5be !important;
+        border-radius: 0 !important;
+
+        font-family: 'Montserrat', sans-serif;
+
+        font-size: 12px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+
+        transition: all 0.3s ease;
+    }
+
+    .cancel-btn:hover {
+        background: #f8f3ee !important;
+        color: #24201d !important;
+
+        border-color: #24201d !important;
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+
+    @media (max-width: 768px) {
+
+        .add-page {
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+
+        .add-card .card-body {
+            padding: 30px 22px !important;
+        }
+
+        .add-title {
+            font-size: 32px;
+        }
+
+        .preview-wrapper {
+            width: 190px;
+            height: 190px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .action-buttons a,
+        .action-buttons button {
+            width: 100%;
+        }
+
+    }
+</style>
+
+
+<!-- ==============================
+     LIVE IMAGE PREVIEW
+============================== -->
+
+<script>
+
+function previewImage(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const preview = document.getElementById('imagePreview');
+
+        const box = document.getElementById('imagePreviewBox');
+
+        preview.src = e.target.result;
+
+        box.classList.remove('d-none');
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+
+</script>
+
+
+{% include 'footer.html' %}

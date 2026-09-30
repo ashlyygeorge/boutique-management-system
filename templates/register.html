@@ -1,0 +1,824 @@
+{% load static %}
+
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ELORA - Register</title>
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+
+            margin: 0;
+
+            background-color: #f5eee8 !important;
+
+            color: #1e2d4a !important;
+
+            font-family: 'Montserrat', sans-serif;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================
+           MAIN WRAPPER
+        ========================= */
+
+        .register-wrapper {
+
+            min-height: calc(100vh - 80px);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 40px 20px;
+
+        }
+
+
+        /* =========================
+           REGISTER CARD
+        ========================= */
+
+        .register-container {
+
+            width: 1200px;
+
+            max-width: 100%;
+
+            height: 600px;
+
+            min-height: 600px;
+
+            max-height: 600px;
+
+            background: #ffffff;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.12);
+
+        }
+
+
+        /* =========================
+           IMAGE AREA
+        ========================= */
+
+        .register-image-wrapper {
+
+            width: 58%;
+
+            height: 600px;
+
+            min-height: 600px;
+
+            max-height: 600px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+
+            background: #000;
+
+            border-right: 2px solid #ffffff;
+
+        }
+
+
+        /* =========================
+           IMAGE
+        ========================= */
+
+        .register-image-wrapper img {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            object-position: center;
+
+            opacity: 1;
+
+            transition: opacity 0.7s ease-in-out;
+
+        }
+
+
+        /* =========================
+           IMAGE OVERLAY
+        ========================= */
+
+        .image-overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            background: linear-gradient(
+                to top,
+                rgba(20, 20, 20, 0.55),
+                rgba(20, 20, 20, 0.02)
+            );
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 45px;
+
+            pointer-events: none;
+
+        }
+
+
+        /* =========================
+           IMAGE TEXT
+        ========================= */
+
+        .image-text {
+
+            color: #ffffff;
+
+        }
+
+
+        .image-text h1 {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 42px;
+
+            margin-bottom: 8px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .image-text p {
+
+            font-size: 15px;
+
+            letter-spacing: 1px;
+
+            margin: 0;
+
+        }
+
+
+        /* =========================
+           REGISTER FORM AREA
+        ========================= */
+
+        .register-form-wrapper {
+
+            width: 42%;
+
+            height: 600px;
+
+            min-height: 600px;
+
+            max-height: 600px;
+
+            padding: 45px 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background: #ffffff;
+
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .register-title {
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 38px;
+
+            color: #1e2d4a;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .register-subtitle {
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        /* =========================
+           LABEL
+        ========================= */
+
+        .form-label-custom {
+
+            font-size: 12px;
+
+            letter-spacing: 1.5px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            margin-bottom: 6px;
+
+            display: block;
+
+            color: #1e2d4a;
+
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        .custom-input {
+
+            background-color: #ffffff !important;
+
+            border: 1px solid #d1c7bc !important;
+
+            border-radius: 8px !important;
+
+            color: #212529 !important;
+
+            padding: 11px 15px !important;
+
+            font-size: 13px;
+
+            height: 45px;
+
+        }
+
+
+        .custom-input::placeholder {
+
+            color: #6c757d !important;
+
+            opacity: 0.8;
+
+        }
+
+
+        .custom-input:focus {
+
+            background-color: #ffffff !important;
+
+            color: #212529 !important;
+
+            border-color: #1d3557 !important;
+
+            box-shadow:
+                0 0 0 2px rgba(29, 53, 87, 0.12) !important;
+
+        }
+
+
+        /* =========================
+           AUTOFILL
+        ========================= */
+
+        .custom-input:-webkit-autofill,
+
+        .custom-input:-webkit-autofill:hover,
+
+        .custom-input:-webkit-autofill:focus {
+
+            -webkit-text-fill-color: #212529 !important;
+
+            -webkit-box-shadow:
+                0 0 0px 1000px #ffffff inset !important;
+
+            transition:
+                background-color 5000s ease-in-out 0s;
+
+        }
+
+
+        /* =========================
+           REGISTER BUTTON
+        ========================= */
+
+        .btn-custom-register {
+
+            background-color: #1d3557 !important;
+
+            color: #ffffff !important;
+
+            border-radius: 8px !important;
+
+            padding: 11px !important;
+
+            height: 45px;
+
+            font-size: 13px;
+
+            letter-spacing: 2px;
+
+            border: none !important;
+
+            box-shadow:
+                0 4px 6px rgba(0, 0, 0, 0.1);
+
+            transition:
+                all 0.3s ease;
+
+            width: 100%;
+
+        }
+
+
+        .btn-custom-register:hover {
+
+            background-color: #112233 !important;
+
+            color: #ffffff !important;
+
+        }
+
+
+        /* =========================
+           LOGIN LINK
+        ========================= */
+
+        .login-link {
+
+            color: #1d3557;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+
+        .login-link:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .register-error {
+
+            background: #fbe9e9;
+
+            color: #b42318;
+
+            border: 1px solid #f3caca;
+
+            border-radius: 7px;
+
+            padding: 8px 12px;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+
+            text-align: center;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .register-wrapper {
+
+                padding: 25px 15px;
+
+            }
+
+
+            .register-container {
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: auto;
+
+                max-height: none;
+
+                flex-direction: column;
+
+            }
+
+
+            .register-image-wrapper {
+
+                width: 100%;
+
+                height: 380px;
+
+                min-height: 380px;
+
+                max-height: 380px;
+
+                border-right: none;
+
+                border-bottom: 2px solid #ffffff;
+
+            }
+
+
+            .register-form-wrapper {
+
+                width: 100%;
+
+                height: auto;
+
+                min-height: 520px;
+
+                max-height: none;
+
+                padding: 40px 30px;
+
+            }
+
+
+            .image-text h1 {
+
+                font-size: 32px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     REGISTER WRAPPER
+========================== -->
+
+<div class="register-wrapper">
+
+
+    <div class="register-container">
+
+
+        <!-- =========================
+             IMAGE AREA
+        ========================== -->
+
+        <div class="register-image-wrapper">
+
+
+            <img id="registerImage"
+                 src="{% static 'images/rg7.jpg' %}"
+                 alt="Elora Collection">
+
+
+            <!-- IMAGE OVERLAY -->
+
+            <div class="image-overlay">
+
+
+                <div class="image-text">
+
+
+                    <h1>
+                        Welcome to ELORA
+                    </h1>
+
+
+                    <p>
+                        Elegance that speaks for itself.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             REGISTER FORM
+        ========================== -->
+
+        <div class="register-form-wrapper">
+
+
+            <h2 class="register-title">
+                Create Account
+            </h2>
+
+
+            <!-- <p class="register-subtitle">
+                Join ELORA and discover your style.
+            </p> -->
+
+
+            <!-- MESSAGE -->
+
+            {% if msg %}
+
+                <div class="register-error">
+
+                    {{ msg }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- REGISTER FORM -->
+
+            <form action="{% url 'register' %}"
+                  method="POST"
+                  autocomplete="off">
+
+                {% csrf_token %}
+
+
+                <!-- FULL NAME -->
+
+                <div class="mb-3">
+
+                    <label class="form-label-custom">
+                        Full Name
+                    </label>
+
+
+                    <input
+                        type="text"
+                        class="form-control custom-input"
+                        name="username"
+                        placeholder="Enter Full Name"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="mb-3">
+
+                    <label class="form-label-custom">
+                        Email Address
+                    </label>
+
+
+                    <input
+                        type="email"
+                        class="form-control custom-input"
+                        name="useremail"
+                        placeholder="Enter Email Address"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="mb-3">
+
+                    <label class="form-label-custom">
+                        Phone Number
+                    </label>
+
+
+                    <input
+                        type="tel"
+                        class="form-control custom-input"
+                        name="userphone"
+                        placeholder="Enter Phone Number"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="mb-4">
+
+                    <label class="form-label-custom">
+                        Password
+                    </label>
+
+
+                    <input
+                        type="password"
+                        class="form-control custom-input"
+                        name="userpassword"
+                        placeholder="Enter Password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- REGISTER BUTTON -->
+
+                <div class="mb-3">
+
+                    <button
+                        type="submit"
+                        class="btn btn-custom-register">
+
+                        REGISTER
+
+                        <i class="fa-solid fa-user-plus ms-1"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN LINK -->
+
+                <div class="text-center mt-3"
+                     style="font-size: 13px;">
+
+                    Already have an account?
+
+                    <a href="{% url 'login' %}"
+                       class="login-link">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================
+     REGISTER IMAGE SLIDESHOW
+========================== -->
+
+<script>
+
+const registerImages = [
+
+    "{% static 'images/rg7.jpg' %}",
+
+    "{% static 'images/rg3.jpg' %}",
+
+    "{% static 'images/rg4.jpg' %}"
+
+];
+
+
+let currentImage = 0;
+
+
+const registerImage =
+    document.getElementById("registerImage");
+
+
+setInterval(function () {
+
+
+    /* Fade OUT */
+
+    registerImage.style.opacity = "0";
+
+
+    setTimeout(function () {
+
+
+        /* Move to next image */
+
+        currentImage++;
+
+
+        if (currentImage >= registerImages.length) {
+
+            currentImage = 0;
+
+        }
+
+
+        /* Change image */
+
+        registerImage.src =
+            registerImages[currentImage];
+
+
+        /* Fade IN */
+
+        registerImage.style.opacity = "1";
+
+
+    }, 700);
+
+
+}, 4000);
+
+</script>
+
+
+</body>
+
+</html>
+
+
+{% include 'footer.html' %}

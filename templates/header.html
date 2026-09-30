@@ -1,0 +1,1287 @@
+{% load static %}
+
+<!-- ========================================================= -->
+<!-- CSS -->
+<!-- ========================================================= -->
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet">
+
+
+<style>
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .elora-header {
+        background: #1e2d4a;
+        border-bottom: 1px solid #162238;
+        position: relative;
+        z-index: 9999;
+        color: #ffffff;
+    }
+
+
+    /* =========================================================
+       TOP SECTION
+    ========================================================= */
+
+    .elora-top {
+        height: 82px;
+        padding: 0 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        position: relative;
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .elora-logo {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Playfair Display', serif;
+        font-size: 35px;
+        font-weight: 700;
+
+        letter-spacing: 5px;
+
+        flex-shrink: 0;
+    }
+
+    .elora-logo:hover {
+        color: #ffffff !important;
+    }
+
+
+    /* =========================================================
+       CENTER SHOP
+    ========================================================= */
+
+    .elora-shop {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+
+        letter-spacing: 1.2px;
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        transition: 0.25s ease;
+
+        white-space: nowrap;
+
+        z-index: 2;
+    }
+
+    .elora-shop:hover {
+        color: #e8dfd5 !important;
+    }
+
+
+    /* =========================================================
+       CUSTOMER / GUEST RIGHT SIDE
+    ========================================================= */
+
+    .elora-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        gap: 28px;
+
+        margin-left: auto;
+
+        white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       PROFILE / HOME / LOGIN / REGISTER
+    ========================================================= */
+
+    .elora-profile {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 8px;
+
+        transition: 0.25s ease;
+
+        white-space: nowrap;
+    }
+
+    .elora-profile:hover {
+        color: #e8dfd5 !important;
+    }
+
+
+    /* =========================================================
+       GUEST NAVIGATION
+    ========================================================= */
+
+    .elora-guest-link {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+
+        letter-spacing: 0.7px;
+
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        transition: 0.25s ease;
+
+        white-space: nowrap;
+    }
+
+    .elora-guest-link:hover {
+        color: #e8dfd5 !important;
+    }
+
+    .elora-guest-link i {
+        font-size: 15px;
+    }
+
+
+    /* =========================================================
+       ICON LINKS
+    ========================================================= */
+
+    .elora-icon {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-size: 22px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        transition: 0.25s ease;
+
+        flex-shrink: 0;
+    }
+
+    .elora-icon:hover {
+        color: #e8dfd5 !important;
+    }
+
+
+    /* =========================================================
+       CART
+    ========================================================= */
+
+    .elora-cart {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+
+        letter-spacing: 1.1px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        transition: 0.25s ease;
+
+        white-space: nowrap;
+    }
+
+    .elora-cart:hover {
+        color: #e8dfd5 !important;
+    }
+
+
+    /* =========================================================
+       BACK BUTTON
+    ========================================================= */
+
+/*
+    .elora-back-row {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        padding-right: 38px;
+
+        margin-top: 4cm;
+    }
+
+    .elora-back {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+
+        display: flex;
+        align-items: center;
+
+        gap: 6px;
+
+        transition: 0.25s ease;
+
+        white-space: nowrap;
+
+        cursor: pointer;
+    }
+
+    .elora-back:hover {
+        color: #e8dfd5 !important;
+    }
+
+    .elora-back svg {
+        width: 16px;
+        height: 16px;
+    }
+*/
+
+
+    /* =========================================================
+       ADMIN NAVIGATION
+    ========================================================= */
+
+    .elora-admin-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        margin-left: auto;
+
+        white-space: nowrap;
+    }
+
+    .elora-admin-right .elora-admin-link {
+        margin-left: 30px;
+    }
+
+    .elora-admin-right .elora-admin-link:first-child {
+        margin-left: 0;
+    }
+
+    .elora-admin-link {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+
+        letter-spacing: 0.7px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 7px;
+
+        transition: 0.25s ease;
+
+        white-space: nowrap;
+    }
+
+    .elora-admin-link:hover {
+        color: #e8dfd5 !important;
+    }
+
+    .elora-admin-link i {
+        font-size: 15px;
+    }
+
+
+    /* =========================================================
+       CUSTOMER MENU ROW
+    ========================================================= */
+
+    .elora-menu-row {
+        padding: 0 38px 15px;
+    }
+
+
+    /* =========================================================
+       MENU BUTTON
+    ========================================================= */
+
+    .elora-menu-button {
+        border: none;
+        background: transparent;
+
+        color: #ffffff !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+
+        letter-spacing: 1.4px;
+
+        padding: 6px 0;
+
+        display: flex;
+        align-items: center;
+
+        gap: 9px;
+    }
+
+    .elora-menu-button:hover,
+    .elora-menu-button:focus {
+        color: #e8dfd5 !important;
+        box-shadow: none !important;
+    }
+
+
+    /* =========================================================
+       DROPDOWN
+    ========================================================= */
+
+    .elora-dropdown {
+        min-width: 260px;
+
+        background: #ffffff;
+
+        border: none;
+        border-radius: 8px;
+
+        padding: 10px;
+
+        margin-top: 10px !important;
+
+        box-shadow:
+            0 15px 40px rgba(0, 0, 0, 0.22);
+    }
+
+
+    /* =========================================================
+       DROPDOWN ITEMS
+    ========================================================= */
+
+    .elora-dropdown .dropdown-item {
+        color: #1e2d4a !important;
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 17px;
+        font-weight: 600;
+
+        padding: 14px 15px;
+
+        border-radius: 6px;
+
+        display: flex;
+        align-items: center;
+
+        transition: 0.2s ease;
+    }
+
+    .elora-dropdown .dropdown-item:hover {
+        background: #f5eee8 !important;
+        color: #1e2d4a !important;
+    }
+
+    .elora-dropdown .dropdown-item i {
+        width: 27px;
+        margin-right: 9px;
+        text-align: center;
+    }
+
+
+    /* =========================================================
+       DIVIDER
+    ========================================================= */
+
+    .elora-dropdown .dropdown-divider {
+        margin: 8px 4px;
+        border-color: #e3dbd3;
+    }
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    .elora-logout {
+        color: #9c2c2c !important;
+    }
+
+    .elora-logout i {
+        color: #9c2c2c !important;
+    }
+
+    .elora-logout:hover {
+        background: #fff0f0 !important;
+        color: #9c2c2c !important;
+    }
+
+
+    /* =========================================================
+       MOBILE BUTTON
+    ========================================================= */
+
+    .elora-mobile-menu {
+        border: 1px solid rgba(255,255,255,0.45);
+        background: transparent;
+
+        color: #ffffff;
+
+        width: 42px;
+        height: 38px;
+
+        border-radius: 5px;
+
+        font-size: 17px;
+    }
+
+    .elora-mobile-menu:hover {
+        color: #e8dfd5;
+    }
+
+
+    /* =========================================================
+       MOBILE OFFCANVAS
+    ========================================================= */
+
+    .elora-offcanvas {
+        background: #1e2d4a !important;
+        width: 300px !important;
+    }
+
+    .elora-offcanvas .offcanvas-header {
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .elora-offcanvas .offcanvas-title {
+        color: #ffffff !important;
+
+        font-family: 'Playfair Display', serif;
+
+        font-size: 29px;
+        font-weight: 600;
+
+        letter-spacing: 3px;
+    }
+
+    .elora-offcanvas .btn-close {
+        filter: brightness(0) invert(1);
+        opacity: 1;
+    }
+
+
+    /* =========================================================
+       MOBILE LINKS
+    ========================================================= */
+
+    .elora-mobile-link {
+        color: #ffffff !important;
+        text-decoration: none !important;
+
+        display: flex;
+        align-items: center;
+
+        padding: 17px 5px;
+
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+
+        transition: 0.25s ease;
+    }
+
+    .elora-mobile-link:hover {
+        color: #e8dfd5 !important;
+    }
+
+    .elora-mobile-link i {
+        width: 30px;
+        margin-right: 9px;
+
+        font-size: 18px;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 991px) {
+
+        .elora-top {
+            height: 72px;
+            padding: 0 18px;
+        }
+
+        .elora-logo {
+            font-size: 29px;
+            letter-spacing: 4px;
+        }
+
+        .elora-menu-row {
+            display: none;
+        }
+
+        .elora-shop {
+            display: none !important;
+        }
+
+        .elora-back-row {
+            padding-right: 18px;
+            margin-top: 4cm;
+        }
+
+        .elora-back {
+            font-size: 13px;
+        }
+    }
+
+
+    /* =========================================================
+       SMALL MOBILE
+    ========================================================= */
+
+    @media (max-width: 480px) {
+
+        .elora-logo {
+            font-size: 26px;
+            letter-spacing: 3px;
+        }
+
+        .elora-icon {
+            font-size: 18px;
+        }
+
+        .elora-mobile-menu {
+            width: 40px;
+            height: 36px;
+            font-size: 16px;
+        }
+
+        .elora-mobile-link {
+            font-size: 17px;
+        }
+
+        .elora-back-row {
+            padding-right: 18px;
+        }
+
+        .elora-back {
+            font-size: 12px;
+        }
+
+    }
+
+</style>
+
+
+<!-- ========================================================= -->
+<!-- ELORA HEADER -->
+<!-- ========================================================= -->
+
+<header class="elora-header">
+
+
+    <!-- ===================================================== -->
+    <!-- TOP -->
+    <!-- ===================================================== -->
+
+    <div class="elora-top">
+
+
+        <!-- LOGO -->
+
+        <a href="{% url 'index' %}"
+           class="elora-logo">
+
+            ELORA
+
+        </a>
+
+
+        <!-- ================================================= -->
+        <!-- CUSTOMER -->
+        <!-- ================================================= -->
+
+        {% if request.session.user %}
+
+
+        <div class="elora-right d-none d-lg-flex">
+
+
+            <!-- PROFILE -->
+
+            <a href="{% url 'profile' %}"
+               class="elora-profile"
+               title="My Profile">
+
+                <i class="fa-regular fa-user"></i>
+
+            </a>
+
+
+            <!-- WISHLIST -->
+
+            <a href="{% url 'wishlist' %}"
+               class="elora-icon"
+               title="Wishlist">
+
+                <i class="fa-regular fa-heart"></i>
+
+            </a>
+
+
+            <!-- CART -->
+
+            <a href="{% url 'cart' %}"
+               class="elora-cart"
+               title="My Cart">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                Cart
+
+            </a>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- BACK BUTTON -->
+        <!-- ================================================= -->
+
+        <!-- <div class="elora-back-row d-none d-lg-flex">
+
+            <a href="{% url 'index' %}"
+               class="elora-back"
+               title="Go Home">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-arrow-left-circle-fill"
+                     viewBox="0 0 16 16">
+
+                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 1 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708.708L5.707 7.5z"/>
+
+                </svg>
+
+            </a>
+
+        </div> -->
+
+
+        <!-- CENTER SHOP -->
+
+        <a href="{% url 'product_list' %}"
+           class="elora-shop">
+
+            Shop
+
+        </a>
+
+
+        {% elif request.session.admin %}
+
+
+        <!-- ================================================= -->
+        <!-- ADMIN -->
+        <!-- ================================================= -->
+
+        <div class="elora-admin-right d-none d-lg-flex">
+
+
+            <a href="{% url 'admin_dashboard' %}"
+               class="elora-admin-link">
+
+                <i class="fa-solid fa-gauge-high"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{% url 'product_list' %}"
+               class="elora-admin-link">
+
+                <i class="fa-solid fa-box"></i>
+
+                Products
+
+            </a>
+
+
+            <a href="{% url 'add_product' %}"
+               class="elora-admin-link">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Product
+
+            </a>
+
+
+            <a href="{% url 'userview' %}"
+               class="elora-admin-link">
+
+                <i class="fa-solid fa-users"></i>
+
+                Users
+
+            </a>
+
+
+            <a href="{% url 'admin_orders' %}"
+               class="elora-admin-link">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                Orders
+
+            </a>
+
+
+            <a href="{% url 'logout' %}"
+               class="elora-admin-link"
+               onclick="return confirm('Are you sure you want to logout?')">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- ================================================= -->
+        <!-- VISITOR / GUEST -->
+        <!-- ================================================= -->
+
+        <div class="elora-right d-none d-lg-flex">
+
+
+            <!-- HOME -->
+
+            <a href="{% url 'index' %}"
+               class="elora-guest-link">
+
+                <i class="fa-solid fa-house"></i>
+
+                Home
+
+            </a>
+
+
+            <!-- LOGIN -->
+
+            <a href="{% url 'login' %}"
+               class="elora-guest-link">
+
+                <i class="fa-regular fa-user"></i>
+
+                Login
+
+            </a>
+
+
+            <!-- REGISTER -->
+
+            <a href="{% url 'register' %}"
+               class="elora-guest-link">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+                Register
+
+            </a>
+
+
+        </div>
+
+
+        <!-- CENTER SHOP -->
+
+        <a href="{% url 'product_list' %}"
+           class="elora-shop">
+
+            Shop
+
+        </a>
+
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- MOBILE -->
+        <!-- ================================================= -->
+
+        <div class="d-lg-none d-flex align-items-center gap-3">
+
+
+            {% if request.session.user %}
+
+
+                <a href="{% url 'profile' %}"
+                   class="elora-icon"
+                   title="Profile">
+
+                    <i class="fa-regular fa-user"></i>
+
+                </a>
+
+
+                <a href="{% url 'wishlist' %}"
+                   class="elora-icon"
+                   title="Wishlist">
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </a>
+
+
+                <a href="{% url 'cart' %}"
+                   class="elora-icon"
+                   title="Cart">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                </a>
+
+
+            {% endif %}
+
+
+            <button type="button"
+                    class="elora-mobile-menu"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#eloraMobileMenu"
+                    aria-controls="eloraMobileMenu">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- CUSTOMER MENU -->
+    <!-- ===================================================== -->
+
+    {% if request.session.user %}
+
+    <div class="elora-menu-row">
+
+        <div class="dropdown">
+
+
+            <button type="button"
+                    class="elora-menu-button dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+
+                <i class="fa-solid fa-bars"></i>
+
+                MENU
+
+            </button>
+
+
+            <ul class="dropdown-menu elora-dropdown">
+
+
+                <!-- HOME -->
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="{% url 'index' %}">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Home
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <hr class="dropdown-divider">
+
+                </li>
+
+
+                <!-- PROFILE -->
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="{% url 'profile' %}">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        My Profile
+
+                    </a>
+
+                </li>
+
+
+                <!-- WISHLIST -->
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="{% url 'wishlist' %}">
+
+                        <i class="fa-regular fa-heart"></i>
+
+                        Wishlist
+
+                    </a>
+
+                </li>
+
+
+                <!-- ORDERS -->
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="{% url 'order_history' %}">
+
+                        <i class="fa-solid fa-box-open"></i>
+
+                        My Orders
+
+                    </a>
+
+                </li>
+
+
+                <!-- CART -->
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="{% url 'cart' %}">
+
+                        <i class="fa-solid fa-cart-shopping"></i>
+
+                        My Cart
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <hr class="dropdown-divider">
+
+                </li>
+
+
+                <!-- LOGOUT -->
+
+                <li>
+
+                    <a class="dropdown-item elora-logout"
+                       href="{% url 'logout' %}"
+                       onclick="return confirm('Are you sure you want to logout?')">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Logout
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</header>
+
+
+<!-- ========================================================= -->
+<!-- MOBILE MENU -->
+<!-- ========================================================= -->
+
+<div class="offcanvas offcanvas-start elora-offcanvas"
+     tabindex="-1"
+     id="eloraMobileMenu"
+     aria-labelledby="eloraMobileMenuTitle">
+
+
+    <div class="offcanvas-header">
+
+        <h5 class="offcanvas-title"
+            id="eloraMobileMenuTitle">
+
+            ELORA
+
+        </h5>
+
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close">
+
+        </button>
+
+    </div>
+
+
+    <div class="offcanvas-body">
+
+
+        {% if request.session.user %}
+
+
+        <a href="{% url 'index' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-house"></i>
+
+            Home
+
+        </a>
+
+
+        <a href="{% url 'product_list' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-bag-shopping"></i>
+
+            Shop
+
+        </a>
+
+
+        <a href="{% url 'profile' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-regular fa-user"></i>
+
+            My Profile
+
+        </a>
+
+
+        <a href="{% url 'wishlist' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-regular fa-heart"></i>
+
+            Wishlist
+
+        </a>
+
+
+        <a href="{% url 'order_history' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-box-open"></i>
+
+            My Orders
+
+        </a>
+
+
+        <a href="{% url 'cart' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            My Cart
+
+        </a>
+
+
+        <a href="{% url 'logout' %}"
+           class="elora-mobile-link"
+           onclick="return confirm('Are you sure you want to logout?')">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+
+        {% elif request.session.admin %}
+
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-gauge-high"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{% url 'product_list' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-box"></i>
+
+            Products
+
+        </a>
+
+
+        <a href="{% url 'add_product' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Product
+
+        </a>
+
+
+        <a href="{% url 'userview' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-users"></i>
+
+            Users
+
+        </a>
+
+
+        <a href="{% url 'admin_orders' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-box-open"></i>
+
+            Orders
+
+        </a>
+
+
+        <a href="{% url 'logout' %}"
+           class="elora-mobile-link"
+           onclick="return confirm('Are you sure you want to logout?')">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+
+        {% else %}
+
+
+        <!-- VISITOR MOBILE MENU -->
+
+        <a href="{% url 'index' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-house"></i>
+
+            Home
+
+        </a>
+
+
+        <a href="{% url 'product_list' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-bag-shopping"></i>
+
+            Shop
+
+        </a>
+
+
+        <a href="{% url 'login' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-regular fa-user"></i>
+
+            Login
+
+        </a>
+
+
+        <a href="{% url 'register' %}"
+           class="elora-mobile-link">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Register
+
+        </a>
+
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- BOOTSTRAP JS -->
+<!-- ========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

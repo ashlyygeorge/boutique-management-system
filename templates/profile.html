@@ -1,0 +1,753 @@
+
+{% load static %}
+
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | ELORA</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: #f5eee8 !important;
+            color: #1e2d4a !important;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+
+        /* =========================
+           PROFILE WRAPPER
+        ========================= */
+
+        .profile-wrapper {
+            min-height: calc(100vh - 80px);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px 20px;
+        }
+
+
+        /* =========================
+           MAIN PROFILE CARD
+        ========================= */
+
+        .profile-container {
+            width: 1200px;
+            max-width: 100%;
+
+            min-height: 600px;
+
+            background: #ffffff;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* =========================
+           IMAGE AREA
+        ========================= */
+
+        .profile-image-wrapper {
+            width: 48%;
+
+            min-height: 600px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+
+            background: #000;
+
+            border-right: 2px solid #ffffff;
+        }
+
+
+        /* =========================
+           FIXED IMAGE
+        ========================= */
+
+        .profile-image-wrapper img {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            object-position: center;
+        }
+
+
+        /* =========================
+           IMAGE OVERLAY
+        ========================= */
+
+        .profile-image-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            background: linear-gradient(
+                to top,
+                rgba(20, 20, 20, 0.65),
+                rgba(20, 20, 20, 0.05)
+            );
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 45px;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           IMAGE TEXT
+        ========================= */
+
+        .profile-image-text {
+            color: #ffffff;
+        }
+
+        .profile-image-text h1 {
+            font-family: 'Playfair Display', serif;
+
+            font-size: 42px;
+
+            margin-bottom: 8px;
+
+            letter-spacing: 1px;
+        }
+
+        .profile-image-text p {
+            font-size: 15px;
+
+            letter-spacing: 1px;
+
+            margin: 0;
+        }
+
+
+        /* =========================
+           PROFILE CONTENT
+        ========================= */
+
+        .profile-content-wrapper {
+            width: 52%;
+
+            min-height: 600px;
+
+            padding: 55px 60px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background: #ffffff;
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .profile-title {
+            font-family: 'Playfair Display', serif;
+
+            font-size: 38px;
+
+            color: #1e2d4a;
+
+            margin-bottom: 6px;
+        }
+
+        .profile-subtitle {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =========================
+           PROFILE HEADER
+        ========================= */
+
+        .profile-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 18px 20px;
+
+            background: #f8f3ee;
+
+            border: 1px solid #eee3da;
+
+            border-radius: 14px;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           AVATAR
+        ========================= */
+
+        .profile-avatar {
+            width: 75px;
+            height: 75px;
+
+            min-width: 75px;
+
+            border-radius: 50%;
+
+            background: #1e2d4a;
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 30px;
+
+            font-weight: 600;
+
+            box-shadow:
+                0 6px 15px rgba(30, 45, 74, 0.18);
+        }
+
+
+        /* =========================
+           USER NAME
+        ========================= */
+
+        .profile-name {
+            margin: 0;
+
+            font-family: 'Playfair Display', serif;
+
+            font-size: 24px;
+
+            color: #1e2d4a;
+        }
+
+        .profile-role {
+            margin: 4px 0 0;
+
+            color: #888;
+
+            font-size: 12px;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================
+           INFORMATION BOX
+        ========================= */
+
+        .information-box {
+            border: 1px solid #eee3da;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           INFO ROW
+        ========================= */
+
+        .profile-row {
+            display: flex;
+
+            align-items: center;
+
+            padding: 17px 20px;
+
+            border-bottom: 1px solid #eee8e3;
+
+            gap: 15px;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+
+        /* =========================
+           ICON
+        ========================= */
+
+        .profile-icon {
+            width: 38px;
+            height: 38px;
+
+            min-width: 38px;
+
+            border-radius: 9px;
+
+            background: #f5eee8;
+
+            color: #1e2d4a;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           LABEL
+        ========================= */
+
+        .row-content {
+            flex: 1;
+        }
+
+        .row-label {
+            display: block;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            color: #999;
+
+            margin-bottom: 3px;
+        }
+
+        .row-value {
+            font-size: 14px;
+
+            font-weight: 500;
+
+            color: #1e2d4a;
+
+            word-break: break-word;
+        }
+
+        .row-value a {
+            color: #1e2d4a;
+
+            text-decoration: none;
+        }
+
+        .row-value a:hover {
+            color: #31466b;
+        }
+
+
+        /* =========================
+           ACTION BUTTONS
+        ========================= */
+
+        .profile-actions {
+            display: flex;
+
+            gap: 12px;
+        }
+
+        .profile-btn {
+            flex: 1;
+
+            height: 48px;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+
+        /* DARK BUTTON */
+
+        .profile-btn-dark {
+            background: #1e2d4a;
+
+            color: #ffffff;
+
+            border: 1px solid #1e2d4a;
+        }
+
+        .profile-btn-dark:hover {
+            background: #31466b;
+
+            color: #ffffff;
+        }
+
+
+        /* OUTLINE BUTTON */
+
+        .profile-btn-outline {
+            background: #ffffff;
+
+            color: #1e2d4a;
+
+            border: 1px solid #d8cec6;
+        }
+
+        .profile-btn-outline:hover {
+            background: #f5eee8;
+
+            color: #1e2d4a;
+
+            border-color: #c9bcb2;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .profile-image-wrapper {
+                width: 100%;
+
+                min-height: 400px;
+
+                height: 400px;
+
+                border-right: none;
+
+                border-bottom: 2px solid #ffffff;
+            }
+
+            .profile-content-wrapper {
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 45px 35px;
+            }
+        }
+
+
+        @media (max-width: 576px) {
+
+            .profile-wrapper {
+                padding: 25px 15px;
+            }
+
+            .profile-image-wrapper {
+                min-height: 320px;
+
+                height: 320px;
+            }
+
+            .profile-image-overlay {
+                padding: 30px;
+            }
+
+            .profile-image-text h1 {
+                font-size: 32px;
+            }
+
+            .profile-content-wrapper {
+                padding: 35px 22px;
+            }
+
+            .profile-title {
+                font-size: 32px;
+            }
+
+            .profile-header {
+                padding: 15px;
+            }
+
+            .profile-avatar {
+                width: 65px;
+                height: 65px;
+
+                min-width: 65px;
+
+                font-size: 26px;
+            }
+
+            .profile-name {
+                font-size: 21px;
+            }
+
+            .profile-row {
+                padding: 15px;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .profile-btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<div class="profile-wrapper">
+
+    <div class="profile-container">
+
+
+        <!-- =========================
+             FIXED IMAGE AREA
+        ========================== -->
+
+
+        <!-- =========================
+             PROFILE AREA
+        ========================== -->
+
+        <div class="profile-content-wrapper">
+
+
+            <!-- TITLE -->
+
+            <h2 class="profile-title">
+                My Profile
+            </h2>
+
+            <p class="profile-subtitle">
+                Your personal account information
+            </p>
+
+
+            <!-- =========================
+                 PROFILE HEADER
+            ========================== -->
+
+            <div class="profile-header">
+
+                <div class="profile-avatar">
+                    {{ user.username|first|upper }}
+                </div>
+
+                <div>
+
+                    <h4 class="profile-name">
+                        {{ user.username }}
+                    </h4>
+
+                    <p class="profile-role">
+                        ELORA Customer
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 INFORMATION
+            ========================== -->
+
+            <div class="information-box">
+
+
+                <!-- USERNAME -->
+
+                <div class="profile-row">
+
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="row-content">
+
+                        <span class="row-label">
+                            Username
+                        </span>
+
+                        <span class="row-value">
+                            {{ user.username }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="profile-row">
+
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div class="row-content">
+
+                        <span class="row-label">
+                            Email Address
+                        </span>
+
+                        <span class="row-value">
+
+                            <a href="mailto:{{ user.useremail }}">
+                                {{ user.useremail }}
+                            </a>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="profile-row">
+
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+
+                    <div class="row-content">
+
+                        <span class="row-label">
+                            Phone Number
+                        </span>
+
+                        <span class="row-value">
+
+                            <a href="tel:{{ user.userphone }}">
+                                {{ user.userphone }}
+                            </a>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================
+                 ACTION BUTTONS
+            ========================== -->
+
+            <div class="profile-actions">
+
+                <a href="{% url 'order_history' %}"
+                   class="profile-btn profile-btn-dark">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                    My Orders
+
+                </a>
+
+
+                <a href="{% url 'product_list' %}"
+                   class="profile-btn profile-btn-outline">
+
+                    <i class="fa-solid fa-store"></i>
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
+
+{% include 'footer.html' %}
+
+
+<!-- The only functional change from the previous version is that the **slideshow JavaScript and multiple-image handling are completely removed**. The page now uses only `lgsh2.jpg` as the fixed image. -->

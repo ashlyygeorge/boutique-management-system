@@ -1,0 +1,63 @@
+{% load static %}
+{% include 'header.html' %}
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        Remove Stock
+    </h2>
+
+    <div class="card shadow-sm p-4 mx-auto"
+         style="max-width: 500px;">
+
+        <h4>{{ product.product_name }}</h4>
+
+        <p>
+            Current Stock:
+            <strong>{{ product.stock }}</strong>
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label class="form-label">
+                How many units do you want to remove?
+            </label>
+
+            <select name="quantity"
+                    class="form-select mb-3"
+                    required>
+
+                <option value="">
+                    Select quantity
+                </option>
+
+                {% for number in quantities %}
+
+                    <option value="{{ number }}">
+                        Remove {{ number }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit"
+                    class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to remove this stock?')">
+                Remove Stock
+            </button>
+
+            <a href="{% url 'product_list' %}"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% include 'footer.html' %}

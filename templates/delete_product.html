@@ -1,0 +1,76 @@
+{% load static %}
+{% include 'header.html' %}
+
+<div class="container mt-5">
+
+    {% if cannot_delete %}
+
+        <div class="card shadow-sm p-4 text-center">
+
+            <h3 class="text-danger">
+                Cannot Delete Product
+            </h3>
+
+            <p class="mt-3">
+                <strong>{{ product.product_name }}</strong>
+                has already been included in an order.
+            </p>
+
+            <p>
+                This product cannot be permanently deleted because
+                it is required for the order history.
+            </p>
+
+            <a href="{% url 'product_list' %}"
+               class="btn btn-secondary">
+                Back to Products
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <div class="card shadow-sm p-4 mx-auto"
+             style="max-width: 500px;">
+
+            <h3 class="text-danger">
+                Delete Product
+            </h3>
+
+            <p class="mt-3">
+                Are you sure you want to permanently delete:
+            </p>
+
+            <h4>
+                {{ product.product_name }}
+            </h4>
+
+            <p>
+                Current Stock:
+                <strong>{{ product.stock }}</strong>
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to permanently delete this product?')">
+                    Yes, Delete Product
+                </button>
+
+                <a href="{% url 'product_list' %}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% include 'footer.html' %}

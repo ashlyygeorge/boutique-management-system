@@ -1,0 +1,319 @@
+{% load static %}
+
+{% include 'header.html' %}
+
+<div class="container py-5">
+
+    <h2 class="text-center mb-5">Checkout</h2>
+
+    <!-- OUT OF STOCK MESSAGE -->
+
+    {% if unavailable_product %}
+
+        <div class="alert alert-danger text-center">
+
+            <strong>Cannot place order.</strong><br>
+
+            One or more products in your cart are no longer available.
+
+            Please remove the unavailable product from your cart.
+
+        </div>
+
+    {% elif out_of_stock %}
+
+        <div class="alert alert-danger text-center">
+
+            <strong>Cannot place order.</strong><br>
+
+            One or more products in your cart are currently
+            out of stock or do not have enough stock available.<br>
+
+            Please remove the unavailable product from your cart.
+
+        </div>
+
+    {% endif %}
+
+
+    {% if cart_items %}
+
+        <!-- ================= ORDER SUMMARY ================= -->
+
+        <div class="card shadow-sm p-4">
+
+            <h4 class="mb-4">Order Summary</h4>
+
+            {% for item in cart_items %}
+
+                <div class="row align-items-center mb-3">
+
+                    <!-- Product Image -->
+
+                    <div class="col-md-2">
+
+                        {% if item.product and item.product.product_image %}
+
+                            <img src="{{ item.product.product_image.url }}"
+                                 class="img-fluid rounded"
+                                 style="height: 100px;
+                                        width: 100px;
+                                        object-fit: cover;">
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Product Name -->
+
+                    <div class="col-md-4">
+
+                        <h5>{{ item.productname }}</h5>
+
+                        {% if not item.product %}
+
+                            <span class="text-danger">
+                                Product no longer available
+                            </span>
+
+                        {% elif not item.product.status or item.product.stock < item.quantity %}
+
+                            <span class="text-danger">
+                                Out of Stock
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Price -->
+
+                    <div class="col-md-2">
+
+                        <p>
+                            Price: ₹{{ item.productprice }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- Quantity -->
+
+                    <div class="col-md-2">
+
+                        <p>
+                            Quantity: {{ item.quantity }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- Item Total -->
+
+                    <div class="col-md-2">
+
+                        <p>
+                            Item Total: ₹{{ item.item_total }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+            {% endfor %}
+
+
+            <!-- Cart Total -->
+
+            <div class="text-end mt-3">
+
+                <h4>
+                    Total: ₹{{ total }}
+                </h4>
+
+            </div>
+
+        </div>
+
+
+        {% if not out_of_stock %}
+
+            <!-- ================= DELIVERY DETAILS ================= -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="card shadow-sm p-4 mt-4">
+
+                    <h4 class="mb-4">
+                        Delivery Details
+                    </h4>
+
+
+                    <!-- Full Name -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Full Name
+                        </label>
+
+                        <input type="text"
+                               name="fullname"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+
+                    <!-- Phone -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Phone Number
+                        </label>
+
+                        <input type="text"
+                               name="phone"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+
+                    <!-- Address -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Address
+                        </label>
+
+                        <textarea name="address"
+                                  class="form-control"
+                                  rows="4"
+                                  required></textarea>
+
+                    </div>
+
+
+                    <!-- Payment Method -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Payment Method
+                        </label>
+
+                        <div class="border rounded p-3">
+
+                            <!-- Cash on Delivery -->
+
+                            <div class="form-check mb-2">
+
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="payment_method"
+                                       value="Cash on Delivery"
+                                       id="cod"
+                                       checked>
+
+                                <label class="form-check-label" for="cod">
+
+                                    <i class="bi bi-cash-stack me-2"></i>
+
+                                    Cash on Delivery
+
+                                </label>
+
+                            </div>
+
+
+                            <!-- Razorpay -->
+
+                            <div class="form-check">
+
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="payment_method"
+                                       value="Razorpay"
+                                       id="razorpay">
+
+                                <label class="form-check-label" for="razorpay">
+
+                                    <i class="bi bi-credit-card me-2"></i>
+
+                                    Pay Online with Razorpay
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Place Order -->
+
+                    <div class="text-end mt-4">
+
+                        <button type="submit"
+                                class="btn btn-dark">
+
+                            Place Order
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        {% else %}
+
+            <!-- OUT OF STOCK -->
+
+            <div class="text-center mt-4">
+
+                <a href="{% url 'cart' %}"
+                   class="btn btn-dark">
+
+                    Back to Cart
+
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+    {% else %}
+
+        <!-- ================= EMPTY CART ================= -->
+
+        <div class="text-center">
+
+            <p>Your cart is empty.</p>
+
+            <a href="{% url 'product_list' %}"
+               class="btn btn-dark">
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% include 'footer.html' %}
